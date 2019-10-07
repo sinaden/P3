@@ -15,3 +15,11 @@ How to test:
 4. Launch app on P2, click on Friends, wait for app to find peers(can be checked on Logcat)
 5. P2, click on global chat, IMPORTANT in Logcat see if P2 send log about beeing the Client, for some reason sometimes it doesn't work.
 6. P2, click on Chat Roulette, there should be Toast on P1 with username of P2. Works both ways.
+
+
+TODO:
+1. Identification of other device with the same app in current WiFi network (easy)
+2. Fragments (easy-medium)
+3. Design messaging part of the app (medium)
+4. Make it so users can drop in and out of app without any problems(??? probably medium-hard)
+5. Think what else needs to be done XD (hard)

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">P3</string>
+    <string name="registration_button">Register</string>
+    <string name="nickname_hint">Nickname</string>
+
+    <string name="drawer_global_chat">Global Chat</string>
+    <string name="drawer_chat_rooms">Chat Rooms</string>
+    <string name="drawer_chat_roulette">Chat Roulette</string>
+    <string name="drawer_friends">Friends</string>
+    <string name="drawer_settings">Settings</string>
+    <string name="toolbar_title">WiChat</string>
+</resources>

@@ -7,17 +7,12 @@ import androidx.core.app.ActivityCompat;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 
-import android.content.Intent;
-import android.content.IntentFilter;
+
+import android.net.nsd.NsdManager;
+import android.net.nsd.NsdServiceInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.net.wifi.WpsInfo;
-import android.net.wifi.p2p.WifiP2pConfig;
-import android.net.wifi.p2p.WifiP2pDevice;
-import android.net.wifi.p2p.WifiP2pDeviceList;
-import android.net.wifi.p2p.WifiP2pGroup;
-import android.net.wifi.p2p.WifiP2pInfo;
-import android.net.wifi.p2p.WifiP2pManager;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,16 +41,22 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class Main extends AppCompatActivity {
 
+    private static final String TAG = "WiFi";
+    private static final String SERVICE_TYPE = "_wi-chat._tcp.";
     public String NICKNAME = Registration.NICKNAME;
 
     private ImageView mWifiSignal;
@@ -66,16 +67,17 @@ public class Main extends AppCompatActivity {
 
     WifiManager wifiManager;
     WifiInfo wifiInfo;
-    private final IntentFilter intentFilter = new IntentFilter();
-    WifiP2pManager.Channel channel;
-    WifiP2pManager wifiP2pManager;
-    BroadcastReceiver broadcastReceiver;
+    String macAddress;
 
-    WifiP2pInfo groupInfo;
+    int localPort;
+    NsdManager.RegistrationListener registrationListener;
+    String serviceName;
+    NsdManager nsdManager;
+    NsdManager.DiscoveryListener discoveryListener;
+    NsdManager.ResolveListener resolveListener;
 
-    List<WifiP2pDevice> peers = new ArrayList<>();
-    String[] deviceNameArray;
-    WifiP2pDevice[] deviceArray;
+    List<Device> devices = new ArrayList<>();
+
 
     ServerClass serverClass;
     ClientClass clientClass;
@@ -111,6 +113,7 @@ public class Main extends AppCompatActivity {
             }
         };
         wifiSignalCheck.start();
+        macAddress = getMacAddr();
 
 
         ProfileDrawerItem profile = new ProfileDrawerItem().withName(NICKNAME).withIcon(R.drawable.default_avatar);
@@ -180,22 +183,12 @@ public class Main extends AppCompatActivity {
                 });
         Drawer drawer = drawerBuilder.build();
 
-        wifiP2pManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-        channel = wifiP2pManager.initialize(this, getMainLooper(), null);
-        broadcastReceiver = new WiFiDirectBroadcastReceiver(wifiP2pManager, channel, this);
+        initializeRegistrationListener();
+        registerService(8888);
+        initializeResolveListener();
+        initializeDiscoveryListener();
+        nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
 
-
-        // Indicates a change in the Wi-Fi P2P status.
-        intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-
-        // Indicates a change in the list of available peers.
-        intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-
-        // Indicates the state of Wi-Fi P2P connectivity has changed.
-        intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-
-        // Indicates this device's details have changed.
-        intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
     }
 
     Handler handler = new Handler(new Handler.Callback() {
@@ -212,6 +205,7 @@ public class Main extends AppCompatActivity {
             return true;
         }
     });
+
 
     private void setWifiSignal() {
         Context context = getApplicationContext();
@@ -246,38 +240,37 @@ public class Main extends AppCompatActivity {
         mWifiSSID.setText(ssid);
     }
 
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+            //handle exception
+        }
+        return "";
+    }
+
     public void globalChatButton(View view) {
         Toast.makeText(Main.this, "Global Chat", Toast.LENGTH_LONG).show();
-        if (deviceArray == null || deviceArray.length == 0) {
-            wifiP2pManager.createGroup(channel, new WifiP2pManager.ActionListener() {
-                @Override
-                public void onSuccess() {
-                    Log.i("WiFi", "Group created");
-                }
-
-                @Override
-                public void onFailure(int reason) {
-                    Log.i("WiFi", "Group creation failed " + reason);
-                }
-            });
-        } else {
-
-            final WifiP2pDevice device = deviceArray[0];
-            final WifiP2pConfig config = new WifiP2pConfig();
-            config.deviceAddress = device.deviceAddress;
-
-            wifiP2pManager.connect(channel, config, new WifiP2pManager.ActionListener() {
-                @Override
-                public void onSuccess() {
-                    Log.i("WiFi", "Group joined " + config.deviceAddress);
-                }
-
-                @Override
-                public void onFailure(int reason) {
-                    Log.i("WiFi", "Failed to join the group");
-                }
-            });
-        }
+        serverClass = new ServerClass();
+        serverClass.start();
     }
 
     public void chatRoomsButton(View view) {
@@ -286,7 +279,7 @@ public class Main extends AppCompatActivity {
 
     public void chatRouletteButton(View view) {
         Toast.makeText(Main.this, "Chat Roulette", Toast.LENGTH_LONG).show();
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 sendReceive.write(NICKNAME.getBytes());
@@ -297,67 +290,13 @@ public class Main extends AppCompatActivity {
 
     public void friendsButton(View view) {
         Toast.makeText(Main.this, "Friends", Toast.LENGTH_LONG).show();
-        wifiP2pManager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
-            @Override
-            public void onSuccess() {
-                Log.i("WiFi", "Discovering peers");
-            }
-
-            @Override
-            public void onFailure(int reason) {
-                Log.i("WiFi", "Discovering peers, failed");
-            }
-        });
+        clientClass = new ClientClass(devices.get(0).inetAddress);
+        clientClass.start();
     }
 
     public void settingsButton(View view) {
         Toast.makeText(Main.this, "Settings", Toast.LENGTH_LONG).show();
     }
-
-    WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
-        @Override
-        public void onPeersAvailable(WifiP2pDeviceList peersList) {
-            if (!peersList.getDeviceList().equals(peers)) {
-                peers.clear();
-                peers.addAll(peersList.getDeviceList());
-
-                deviceNameArray = new String[peersList.getDeviceList().size()];
-                deviceArray = new WifiP2pDevice[peersList.getDeviceList().size()];
-                int index = 0;
-                for (WifiP2pDevice device : peersList.getDeviceList()) {
-                    deviceNameArray[index] = device.deviceName;
-                    deviceArray[index] = device;
-                    index++;
-                    Log.i("WiFi", device.deviceName + device.deviceAddress);
-                }
-
-
-            }
-            if (peers.size() == 0) {
-                Log.i("WiFi", "No peers found");
-
-            }
-
-        }
-    };
-
-    WifiP2pManager.ConnectionInfoListener connectionInfoListener = new WifiP2pManager.ConnectionInfoListener() {
-        @Override
-        public void onConnectionInfoAvailable(WifiP2pInfo info) {
-            groupInfo = info;
-            final InetAddress groupOwnerAddress = info.groupOwnerAddress;
-
-            if (info.groupFormed && info.isGroupOwner) {
-                Log.i("WiFi", "Host " + info.toString());
-                serverClass = new ServerClass();
-                serverClass.start();
-            } else if (info.groupFormed) {
-                Log.i("WiFi", "Client " + info.toString());
-                clientClass = new ClientClass(groupOwnerAddress);
-                clientClass.start();
-            }
-        }
-    };
 
 
     public class ServerClass extends Thread {
@@ -368,6 +307,7 @@ public class Main extends AppCompatActivity {
         public void run() {
             try {
                 serverSocket = new ServerSocket(8888);
+                localPort = serverSocket.getLocalPort();
                 socket = serverSocket.accept();
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
@@ -414,7 +354,7 @@ public class Main extends AppCompatActivity {
             try {
                 outputStream.write(bytes);
             } catch (IOException e) {
-                Log.i("WiFi", e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         }
     }
@@ -435,40 +375,150 @@ public class Main extends AppCompatActivity {
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             } catch (Exception e) {
-                Log.i("WiFi", e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         }
 
     }
 
+    //Registers name of the service in the local network
+    public void registerService(int port) {
+        NsdServiceInfo serviceInfo = new NsdServiceInfo();
+
+        serviceInfo.setServiceName("Wi-Chat " + macAddress);
+        serviceInfo.setServiceType(SERVICE_TYPE);
+        serviceInfo.setPort(port);
+
+        nsdManager = (NsdManager) getApplicationContext().getSystemService(NSD_SERVICE);
+
+        nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
+
+    }
+
+    //Alerts on success or failure of registering the service
+    public void initializeRegistrationListener() {
+        registrationListener = new NsdManager.RegistrationListener() {
+
+            @Override
+            public void onServiceRegistered(NsdServiceInfo serviceInfo) {
+                serviceName = serviceInfo.getServiceName();
+                Log.i(TAG, "Service registered: " + serviceName);
+            }
+
+            @Override
+            public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
+                Log.i(TAG, "Registration failed, error code: " + errorCode);
+            }
+
+            @Override
+            public void onServiceUnregistered(NsdServiceInfo serviceInfo) {
+                Log.i(TAG, "Service successfully unregistered");
+            }
+
+            @Override
+            public void onUnregistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
+                Log.i(TAG, "Service unregistering failed, error code: " + errorCode);
+            }
+        };
+
+    }
+
+    public void initializeDiscoveryListener() {
+        discoveryListener = new NsdManager.DiscoveryListener() {
+            @Override
+            public void onDiscoveryStarted(String serviceType) {
+                Log.i(TAG, "Service discovery started " + serviceType);
+            }
+
+            @Override
+            public void onServiceFound(NsdServiceInfo serviceInfo) {
+                Log.i(TAG, "Service discovery success " + serviceInfo.toString());
+                if(!serviceInfo.getServiceType().equals(SERVICE_TYPE)){
+                    Log.i(TAG, "Unknown Service Type: " + serviceInfo.getServiceType());
+                } else if(serviceInfo.getServiceName().equals(serviceName)){
+                    Log.i(TAG, "Same machine: " + serviceName);
+                }else if(serviceInfo.getServiceName().contains("Wi-Chat")){
+                    nsdManager.resolveService(serviceInfo, resolveListener);
+                }
+            }
+
+            @Override
+            public void onServiceLost(NsdServiceInfo serviceInfo) {
+                Log.i(TAG, "Service lost: " + serviceInfo.toString());
+            }
+
+            @Override
+            public void onDiscoveryStopped(String serviceType) {
+                Log.i(TAG, "Discovery stopped: " + serviceType);
+            }
+
+            @Override
+            public void onStartDiscoveryFailed(String serviceType, int errorCode) {
+                Log.e(TAG, "Discovery failed: Error code: " + errorCode);
+                nsdManager.stopServiceDiscovery(this);
+            }
+
+            @Override
+            public void onStopDiscoveryFailed(String serviceType, int errorCode) {
+                Log.e(TAG, "Discovery failed: Error code: " + errorCode);
+                nsdManager.stopServiceDiscovery(this);
+            }
+        };
+
+    }
+
+    public void initializeResolveListener(){
+        resolveListener = new NsdManager.ResolveListener() {
+            @Override
+            public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
+                Log.e(TAG, "Resolve failed: " +errorCode);
+            }
+
+            @Override
+            public void onServiceResolved(NsdServiceInfo serviceInfo) {
+                Log.e(TAG, "Resolve Succeeded. " + serviceInfo.toString());
+
+                if (serviceInfo.getServiceName().equals(serviceName)){
+                    Log.i(TAG, "Same IP.");
+                    return;
+                }
+
+                int port = serviceInfo.getPort();
+                InetAddress host = serviceInfo.getHost();
+                String hostMacAddress = serviceInfo.getServiceName().replaceFirst("Wi-Chat", "").trim();
+
+                devices.add(new Device(hostMacAddress, host));
+                Log.i(TAG, devices.get(devices.size()-1).macAddress + devices.get(devices.size()-1).inetAddress);
+
+            }
+        };
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(broadcastReceiver, intentFilter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(broadcastReceiver);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        wifiP2pManager.removeGroup(channel, new WifiP2pManager.ActionListener() {
-            @Override
-            public void onSuccess() {
-                Log.i("WiFi", "Group removed");
-            }
+    }
+}
 
-            @Override
-            public void onFailure(int reason) {
-                Log.i("WiFi", "Failed to remove group " + reason);
-            }
-        });
+class Device{
+    String macAddress;
+    InetAddress inetAddress;
 
 
+    public Device (String macAddress, InetAddress inetAddress){
+        this.macAddress = macAddress;
+        this.inetAddress = inetAddress;
     }
 }

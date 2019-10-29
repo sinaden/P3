@@ -275,6 +275,9 @@ public class Main extends AppCompatActivity {
 
     public void chatRoomsButton(View view) {
         Toast.makeText(Main.this, "Chat Rooms", Toast.LENGTH_LONG).show();
+       // Log.i(TAG, NICKNAME);
+        Log.e(TAG, "My nickname is " + NICKNAME );
+
     }
 
     public void chatRouletteButton(View view) {
@@ -313,7 +316,7 @@ public class Main extends AppCompatActivity {
                 sendReceive.start();
 
             } catch (IOException e) {
-
+                Log.e(TAG, e.getMessage());
             }
         }
     }

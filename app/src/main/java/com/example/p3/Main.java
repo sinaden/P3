@@ -56,6 +56,7 @@ import java.util.List;
 public class Main extends AppCompatActivity {
 
     private static final String TAG = "WiFi";
+    private static final int portNo = 9073;
     private static final String SERVICE_TYPE = "_wi-chat._tcp.";
     public String NICKNAME = Registration.NICKNAME;
 
@@ -184,7 +185,7 @@ public class Main extends AppCompatActivity {
         Drawer drawer = drawerBuilder.build();
 
         initializeRegistrationListener();
-        registerService(8888);
+        registerService(portNo);
         initializeResolveListener();
         initializeDiscoveryListener();
         nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
@@ -290,7 +291,7 @@ public class Main extends AppCompatActivity {
                 sendReceive.write(NICKNAME.getBytes());
             }
         }.start();
-        }
+
 
 
     }
@@ -313,7 +314,7 @@ public class Main extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                serverSocket = new ServerSocket(8888);
+                serverSocket = new ServerSocket(portNo);
                 localPort = serverSocket.getLocalPort();
                 socket = serverSocket.accept();
                 sendReceive = new SendReceive(socket);
@@ -378,7 +379,7 @@ public class Main extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                socket.connect(new InetSocketAddress(hostAddress, 8888), 500);
+                socket.connect(new InetSocketAddress(hostAddress, portNo), 500);
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             } catch (Exception e) {

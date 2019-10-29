@@ -281,13 +281,19 @@ public class Main extends AppCompatActivity {
     }
 
     public void chatRouletteButton(View view) {
-        Toast.makeText(Main.this, "Chat Roulette", Toast.LENGTH_LONG).show();
-        new Thread() {
-            @Override
-            public void run() {
-                sendReceive.write(NICKNAME.getBytes());
-            }
-        }.start();
+        Toast.makeText(Main.this, "Chat1 Roulette", Toast.LENGTH_LONG).show();
+
+        try {
+            new Thread() {
+                @Override
+                public void run() {
+                    sendReceive.write(NICKNAME.getBytes());
+                }
+            }.start();
+        }catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+
 
     }
 

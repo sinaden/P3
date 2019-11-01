@@ -208,6 +208,7 @@ public class Main extends AppCompatActivity {
     // Sina: At this level it is only Global chat fragment.
     private void setupViewPager(ViewPager viewPager) {
         StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Fragment(), "base");
         adapter.addFragment(new GlobalChatFragment(), "GlobalChatFragment");
         //adapter.addFragment(new Fragment(), "GlobalChatFragment");
         viewPager.setAdapter(adapter);

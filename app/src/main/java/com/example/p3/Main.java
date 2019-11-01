@@ -544,7 +544,8 @@ public class Main extends AppCompatActivity {
             super.onBackPressed();
         else {
             Log.d(TAG, "no. fragmentsss" + count);
-            mViewPager.setCurrentItem(1);
+            //mViewPager.setCurrentItem(1);
+            mStatePagerAdapter.destroyItem(mViewPager, 0,false);
         }
     }
 

@@ -302,7 +302,7 @@ public class Main extends AppCompatActivity {
         mStatePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
-        mViewPager.setCurrentItem(0);
+        //mViewPager.setCurrentItem(0);
 
     }
 

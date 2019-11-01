@@ -527,6 +527,12 @@ public class Main extends AppCompatActivity {
         };
     }
 
+    @Override
+    public void onBackPressed() {
+        int count = mStatePagerAdapter.getCount();
+        Log.d(TAG, "no. fragments" + count);
+        super.onBackPressed();
+    }
 
     @Override
     protected void onResume() {

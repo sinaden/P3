@@ -2,6 +2,8 @@ package com.example.p3;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 
 import android.content.BroadcastReceiver;
@@ -83,6 +85,11 @@ public class Main extends AppCompatActivity {
     ServerClass serverClass;
     ClientClass clientClass;
     SendReceive sendReceive;
+
+
+    // Sina:
+    private StatePagerAdapter mStatePagerAdapter;
+    private ViewPager mViewPager;
 
 
     @Override
@@ -190,8 +197,21 @@ public class Main extends AppCompatActivity {
         initializeDiscoveryListener();
         nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
 
+        // Sina:
+        mStatePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.container);
+
+        // Sina : call setupViewPager(mViewPager) whenever you want to inflate the fragment.
+        // So for now it is called when the user clicks on Chatroom button
     }
 
+    // Sina: At this level it is only Global chat fragment.
+    private void setupViewPager(ViewPager viewPager) {
+        StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Fragment(), "GlobalChatFG");
+        viewPager.setAdapter(adapter);
+
+    }
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -278,6 +298,7 @@ public class Main extends AppCompatActivity {
         Toast.makeText(Main.this, "Chat Rooms", Toast.LENGTH_LONG).show();
        // Log.i(TAG, NICKNAME);
         Log.e(TAG, "My nickname is " + NICKNAME );
+        setupViewPager(mViewPager);
 
     }
 

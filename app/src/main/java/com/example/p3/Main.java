@@ -542,9 +542,10 @@ public class Main extends AppCompatActivity {
 
         if (count == 0)
             super.onBackPressed();
-        else
+        else {
             Log.d(TAG, "no. fragmentsss" + count);
-
+            mViewPager.setCurrentItem(1);
+        }
     }
 
     @Override

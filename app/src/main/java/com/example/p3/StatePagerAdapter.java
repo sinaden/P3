@@ -30,6 +30,8 @@ public class StatePagerAdapter extends FragmentStatePagerAdapter {
         return mFragments.get(position);
     }
 
+
+
     @Override
     public int getCount() {
         return mFragments.size();

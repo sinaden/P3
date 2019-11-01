@@ -531,7 +531,12 @@ public class Main extends AppCompatActivity {
     public void onBackPressed() {
         int count = mStatePagerAdapter.getCount();
         Log.d(TAG, "no. fragments" + count);
-        super.onBackPressed();
+
+        if (count == 0)
+            super.onBackPressed();
+        else
+            Log.d(TAG, "no. fragmentsss" + count);
+
     }
 
     @Override

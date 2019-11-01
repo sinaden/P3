@@ -22,6 +22,8 @@ public class StatePagerAdapter extends FragmentStatePagerAdapter {
     public void addFragment(Fragment fragment, String title) {
         mFragments.add(fragment);
         mFragmentsTitles.add(title);
+
+
     }
     @Override
     public Fragment getItem(int position) {

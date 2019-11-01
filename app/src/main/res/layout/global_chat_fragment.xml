@@ -80,7 +80,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
 
-        app:layout_constraintEnd_toEndOf="@+id/guideline7"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintHorizontal_bias="0.372"
 
         app:layout_constraintStart_toStartOf="@+id/guideline6"

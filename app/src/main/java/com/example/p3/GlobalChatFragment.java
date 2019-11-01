@@ -31,6 +31,8 @@ public class GlobalChatFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Sent", Toast.LENGTH_SHORT).show();
+                //(Main)reportOnFragments
+                ((Main)getActivity()).reportOnFragments();
             }
         });
 

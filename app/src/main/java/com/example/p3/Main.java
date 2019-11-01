@@ -208,7 +208,7 @@ public class Main extends AppCompatActivity {
     // Sina: At this level it is only Global chat fragment.
     private void setupViewPager(ViewPager viewPager) {
         StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Fragment(), "base");
+       // adapter.addFragment(new Fragment(), "base");
         adapter.addFragment(new GlobalChatFragment(), "GlobalChatFragment");
         //adapter.addFragment(new Fragment(), "GlobalChatFragment");
         viewPager.setAdapter(adapter);
@@ -528,10 +528,14 @@ public class Main extends AppCompatActivity {
         };
     }
 
+    public void reportOnFragments() {
+        int count = mStatePagerAdapter.getCount();
+        Log.d(TAG, "no. fragments" + count);
+    }
     @Override
     public void onBackPressed() {
         int count = mStatePagerAdapter.getCount();
-        Log.d(TAG, "no. fragments" + count);
+        //Log.d(TAG, "no. fragments" + count);
 
         if (count == 0)
             super.onBackPressed();

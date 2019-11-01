@@ -198,9 +198,10 @@ public class Main extends AppCompatActivity {
         nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
 
         // Sina:
-   //     mStatePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
-   //     mViewPager = (ViewPager) findViewById(R.id.container);
+        mStatePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.container);
 
+        setupViewPager(mViewPager);
         // Sina : call setupViewPager(mViewPager) whenever you want to inflate the fragment.
         // So for now it is called when the user clicks on Chatroom button
     }
@@ -209,6 +210,7 @@ public class Main extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         //StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
 
+        mStatePagerAdapter.addFragment(new BaseFragment(), "BaseFragment");
         mStatePagerAdapter.addFragment(new GlobalChatFragment(), "GlobalChatFragment");
         mStatePagerAdapter.addFragment(new Fragment(), "base1");
         mStatePagerAdapter.addFragment(new Fragment(), "base2");
@@ -303,9 +305,7 @@ public class Main extends AppCompatActivity {
         Toast.makeText(Main.this, "Chat Rooms", Toast.LENGTH_LONG).show();
        // Log.i(TAG, NICKNAME);
         Log.e(TAG, "My nickname is " + NICKNAME );
-        mStatePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        setupViewPager(mViewPager);
+
         //mViewPager.setCurrentItem(0);
 
     }

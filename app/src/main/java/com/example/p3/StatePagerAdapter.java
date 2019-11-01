@@ -30,7 +30,12 @@ public class StatePagerAdapter extends FragmentStatePagerAdapter {
         return mFragments.get(position);
     }
 
+    public void removeFragment(int position) {
+        mFragments.remove(position);
+        mFragmentsTitles.remove(position);
 
+
+    }
 
     @Override
     public int getCount() {

@@ -545,7 +545,7 @@ public class Main extends AppCompatActivity {
         else {
             Log.d(TAG, "no. fragmentsss" + count);
             //mViewPager.setCurrentItem(1);
-            mStatePagerAdapter.destroyItem(mViewPager, 1,false);
+            mStatePagerAdapter.destroyItem(mViewPager, 1,mStatePagerAdapter.getItem(1));
         }
     }
 

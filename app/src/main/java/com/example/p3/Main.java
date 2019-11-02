@@ -212,9 +212,10 @@ public class Main extends AppCompatActivity {
 
         mStatePagerAdapter.addFragment(new BaseFragment(), "BaseFragment");
         mStatePagerAdapter.addFragment(new GlobalChatFragment(), "GlobalChatFragment");
-        mStatePagerAdapter.addFragment(new Fragment(), "base1");
-        mStatePagerAdapter.addFragment(new Fragment(), "base2");
-        mStatePagerAdapter.addFragment(new Fragment(), "base3");
+        mStatePagerAdapter.addFragment(new ChatRoomsFragment(), "ChatRoomsFragment");
+        mStatePagerAdapter.addFragment(new ChatRouletteFragment(), "ChatRouletteFragment");
+        mStatePagerAdapter.addFragment(new FriendsListFragment(), "FriendsListFragment");
+        mStatePagerAdapter.addFragment(new SettingsFragment(), "SettingFragment");
         //adapter.addFragment(new Fragment(), "GlobalChatFragment");
         viewPager.setAdapter(mStatePagerAdapter);
 

@@ -409,7 +409,7 @@ public class Main extends AppCompatActivity {
         @Override
         public void run() {
             try {
-
+                Log.e(TAG, "ServerClass: port no is " + portNo);
                 serverSocket = new ServerSocket(portNo);
                 localPort = serverSocket.getLocalPort();
                 socket = serverSocket.accept();

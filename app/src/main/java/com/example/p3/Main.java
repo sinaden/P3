@@ -313,8 +313,15 @@ public class Main extends AppCompatActivity {
     public void beClient() {
 
         for (int i =0; i < devices.size(); i++) {
-            clientClass = new ClientClass(devices.get(i).inetAddress);
-            clientClass.start();
+            try {
+                clientClass = new ClientClass(devices.get(i).inetAddress);
+                clientClass.start();
+
+                Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
+            }catch (Exception e) {
+                Log.i(TAG, "beClient: "+ e.getMessage());
+            }
+
         }
 
     }

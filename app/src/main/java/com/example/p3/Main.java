@@ -537,6 +537,9 @@ public class Main extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+
+        mViewPager.setCurrentItem(0);
+
         int count = mStatePagerAdapter.getCount();
         //Log.d(TAG, "no. fragments" + count);
 
@@ -544,8 +547,8 @@ public class Main extends AppCompatActivity {
             super.onBackPressed();
         else {
             Log.d(TAG, "no. fragmentsss" + count);
-            //mViewPager.setCurrentItem(1);
-            mStatePagerAdapter.removeFragment(0);
+            //mViewPager.setCurrentItem(0);
+            //mStatePagerAdapter.removeFragment(0);
         }
     }
 

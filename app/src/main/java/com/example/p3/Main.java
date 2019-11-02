@@ -60,7 +60,7 @@ public class Main extends AppCompatActivity {
     private static final String TAG = "WiFi";
     private static int portNo;
 
-    private static final int registrationPort = 9000;
+    //private static final int registrationPort = 9000;
     private static final String SERVICE_TYPE = "_wi-chat._tcp.";
     public String NICKNAME = Registration.NICKNAME;
 
@@ -193,15 +193,18 @@ public class Main extends AppCompatActivity {
                 });
         Drawer drawer = drawerBuilder.build();
 
+
+        portNo = findFreePort();
+        Log.i(TAG, "onCreate: port no" + portNo);
+
         initializeRegistrationListener();
-        registerService(registrationPort);
+        registerService(portNo);
         initializeResolveListener();
         initializeDiscoveryListener();
         nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
 
         // Sina:
-        portNo = findFreePort();
-        Log.i(TAG, "onCreate: port no" + portNo);
+
         mStatePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
 

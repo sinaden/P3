@@ -342,6 +342,8 @@ public class Main extends AppCompatActivity {
     public void beServer() {
         serverClass = new ServerClass();
         serverClass.start();
+        serverClass.setName("ServerClass Thread");
+
     }
     public void beClient() {
 
@@ -349,6 +351,7 @@ public class Main extends AppCompatActivity {
             try {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
                 clientClass.start();
+                serverClass.setName("ClientClass Thread");
 
                 Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
             }catch (Exception e) {
@@ -360,7 +363,7 @@ public class Main extends AppCompatActivity {
     }
 
     public void sendName() {
-        new Thread() {
+        new Thread("sendName") {
             @Override
             public void run() {
                 sendReceive.write(NICKNAME.getBytes());
@@ -422,6 +425,7 @@ public class Main extends AppCompatActivity {
                 socket = serverSocket.accept();
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
+                sendReceive.setName("SendReceive/fromServer");
 
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
@@ -488,6 +492,7 @@ public class Main extends AppCompatActivity {
                 socket.connect(new InetSocketAddress(hostAddress, port), 500);
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
+                sendReceive.setName("sendRecieve/fromClient");
             } catch (Exception e) {
                 Log.i(TAG, e.getMessage());
             }

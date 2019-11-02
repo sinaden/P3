@@ -10,4 +10,6 @@
     <string name="drawer_settings">Settings</string>
     <string name="toolbar_title">WiChat</string>
     <string name="sendButton">Send</string>
+    <string name="chatroomsFragmentTitle">Chatrooms</string>
+    <string name="chatRouletteFTitle">Chat Roulette</string>
 </resources>

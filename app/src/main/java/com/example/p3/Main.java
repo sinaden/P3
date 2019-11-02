@@ -59,7 +59,6 @@ public class Main extends AppCompatActivity {
 
     private static final String TAG = "WiFi";
     private static final int portNo;
-
     static {
         portNo = findFreePort();
     }

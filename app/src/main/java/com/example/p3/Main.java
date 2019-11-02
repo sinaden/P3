@@ -302,6 +302,24 @@ public class Main extends AppCompatActivity {
         serverClass.start();
     }
 
+    public void beServer() {
+        serverClass = new ServerClass();
+        serverClass.start();
+    }
+    public void beClient() {
+        clientClass = new ClientClass(devices.get(0).inetAddress);
+        clientClass.start();
+    }
+
+    public void sendName() {
+        new Thread() {
+            @Override
+            public void run() {
+                sendReceive.write(NICKNAME.getBytes());
+            }
+        }.start();
+    }
+
     public void chatRoomsButton(View view) {
         Toast.makeText(Main.this, "Chat Rooms", Toast.LENGTH_LONG).show();
        // Log.i(TAG, NICKNAME);

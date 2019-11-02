@@ -36,8 +36,8 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Glob");
-                ((Main)getActivity()).changeView(1);
-
+            //    ((Main)getActivity()).changeView(1);
+                ((Main)getActivity()).beServer();
             }
         });
 
@@ -53,14 +53,16 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Rou");
-                ((Main)getActivity()).changeView(3);
+            //    ((Main)getActivity()).changeView(3);
+                ((Main)getActivity()).sendName();
             }
         });
         btnFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Fre");
-                ((Main)getActivity()).changeView(4);
+            //    ((Main)getActivity()).changeView(4);
+                ((Main)getActivity()).beClient();
             }
         });
 

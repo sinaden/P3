@@ -58,7 +58,12 @@ import java.util.List;
 public class Main extends AppCompatActivity {
 
     private static final String TAG = "WiFi";
-    private static final int portNo = 0;
+    private static final int portNo;
+
+    static {
+        portNo = findFreePort();
+    }
+
     private static final int registrationPort = 9000;
     private static final String SERVICE_TYPE = "_wi-chat._tcp.";
     public String NICKNAME = Registration.NICKNAME;
@@ -403,8 +408,8 @@ public class Main extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                int port = findFreePort();
-                serverSocket = new ServerSocket(port);
+
+                serverSocket = new ServerSocket(portNo);
                 localPort = serverSocket.getLocalPort();
                 socket = serverSocket.accept();
                 sendReceive = new SendReceive(socket);
@@ -469,8 +474,8 @@ public class Main extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                int port = findFreePort();
-                socket.connect(new InetSocketAddress(hostAddress, port), 2500);
+
+                socket.connect(new InetSocketAddress(hostAddress, portNo), 500);
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             } catch (Exception e) {
@@ -486,6 +491,8 @@ public class Main extends AppCompatActivity {
 
         serviceInfo.setServiceName("Wi-Chat " + macAddress);
         serviceInfo.setServiceType(SERVICE_TYPE);
+        //serviceInfo.setAttribute("portNo", );
+
         serviceInfo.setPort(port);
 
         nsdManager = (NsdManager) getApplicationContext().getSystemService(NSD_SERVICE);

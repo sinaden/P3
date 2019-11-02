@@ -207,6 +207,31 @@ public class Main extends AppCompatActivity {
         // So for now it is called when the user clicks on Chatroom button
     }
 
+
+    // Sine : find free port
+    private static int findFreePort() {
+        ServerSocket socket = null;
+        try {
+            socket = new ServerSocket(0);
+            socket.setReuseAddress(true);
+            int port = socket.getLocalPort();
+            try {
+                socket.close();
+            } catch (IOException e) {
+                // Ignore IOException on close()
+            }
+            return port;
+        } catch (IOException e) {
+        } finally {
+            if (socket != null) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        throw new IllegalStateException("Could not find a free TCP/IP port to start embedded Jetty HTTP Server on");
+    }
     // Sina: At this level it is only Global chat fragment.
     private void setupViewPager(ViewPager viewPager) {
         //StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
@@ -378,7 +403,8 @@ public class Main extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                serverSocket = new ServerSocket(portNo);
+                int port = findFreePort();
+                serverSocket = new ServerSocket(port);
                 localPort = serverSocket.getLocalPort();
                 socket = serverSocket.accept();
                 sendReceive = new SendReceive(socket);
@@ -443,7 +469,8 @@ public class Main extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                socket.connect(new InetSocketAddress(hostAddress, portNo), 500);
+                int port = findFreePort();
+                socket.connect(new InetSocketAddress(hostAddress, port), 500);
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             } catch (Exception e) {

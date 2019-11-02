@@ -58,7 +58,7 @@ import java.util.List;
 public class Main extends AppCompatActivity {
 
     private static final String TAG = "WiFi";
-    private static final int portNo = 9073;
+    private static final int portNo = 0;
     private static final String SERVICE_TYPE = "_wi-chat._tcp.";
     public String NICKNAME = Registration.NICKNAME;
 

@@ -346,7 +346,7 @@ public class Main extends AppCompatActivity {
 
         for (int i =0; i < devices.size(); i++) {
             try {
-                clientClass = new ClientClass(devices.get(i).inetAddress);
+                clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
                 clientClass.start();
 
                 Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
@@ -393,7 +393,7 @@ public class Main extends AppCompatActivity {
 
     public void friendsButton(View view) {
         Toast.makeText(Main.this, "Friends", Toast.LENGTH_LONG).show();
-        clientClass = new ClientClass(devices.get(0).inetAddress);
+        clientClass = new ClientClass(devices.get(0).inetAddress, devices.get(0).port);
         clientClass.start();
     }
 
@@ -466,9 +466,11 @@ public class Main extends AppCompatActivity {
     public class ClientClass extends Thread {
         Socket socket;
         String hostAddress;
+        int port;
 
-        public ClientClass(InetAddress hostAddress) {
+        public ClientClass(InetAddress hostAddress, int port) {
             this.hostAddress = hostAddress.getHostAddress();
+            this.port = port;
             socket = new Socket();
         }
 
@@ -476,7 +478,7 @@ public class Main extends AppCompatActivity {
         public void run() {
             try {
 
-                socket.connect(new InetSocketAddress(hostAddress, portNo), 500);
+                socket.connect(new InetSocketAddress(hostAddress, port), 500);
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             } catch (Exception e) {
@@ -594,7 +596,7 @@ public class Main extends AppCompatActivity {
                 InetAddress host = serviceInfo.getHost();
                 String hostMacAddress = serviceInfo.getServiceName().replaceFirst("Wi-Chat", "").trim();
 
-                devices.add(new Device(hostMacAddress, host));
+                devices.add(new Device(hostMacAddress, host, port));
                 Log.i(TAG, devices.get(devices.size()-1).macAddress + devices.get(devices.size()-1).inetAddress);
 
             }
@@ -655,10 +657,12 @@ public class Main extends AppCompatActivity {
 class Device{
     String macAddress;
     InetAddress inetAddress;
+    int port;
 
 
-    public Device (String macAddress, InetAddress inetAddress){
+    public Device (String macAddress, InetAddress inetAddress, int port){
         this.macAddress = macAddress;
         this.inetAddress = inetAddress;
+        this.port = port;
     }
 }

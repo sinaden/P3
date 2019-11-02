@@ -70,7 +70,8 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Set");
-                ((Main)getActivity()).changeView(5);
+                //((Main)getActivity()).changeView(5);
+                ((Main)getActivity()).showDevices();
             }
         });
 

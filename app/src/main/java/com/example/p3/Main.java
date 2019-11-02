@@ -302,6 +302,10 @@ public class Main extends AppCompatActivity {
         serverClass.start();
     }
 
+    public void beServerAndClient(){
+        beServer();
+        beClient();
+    }
     public void beServer() {
         serverClass = new ServerClass();
         serverClass.start();
@@ -550,6 +554,16 @@ public class Main extends AppCompatActivity {
         };
     }
 
+    public void showDevices() {
+        int cnt = 0;
+        for(Device i : devices) {
+            String k = i.macAddress;
+            String x = Integer.toString(cnt);
+            InetAddress kk = i.inetAddress;
+            Log.i(TAG, x + ":     " + k + " , " +kk.toString());
+            cnt += 1;
+        }
+    }
     public void changeView(int pos) {
         mViewPager.setCurrentItem(pos);
     }

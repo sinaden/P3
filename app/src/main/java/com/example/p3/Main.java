@@ -470,7 +470,7 @@ public class Main extends AppCompatActivity {
         public void run() {
             try {
                 int port = findFreePort();
-                socket.connect(new InetSocketAddress(hostAddress, port), 500);
+                socket.connect(new InetSocketAddress(hostAddress, port), 2500);
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             } catch (Exception e) {

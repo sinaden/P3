@@ -32,17 +32,20 @@ public class BaseFragment extends Fragment {
         btnFriends = (ImageView) view.findViewById(R.id.friends);
         btnSettings = (ImageView) view.findViewById(R.id.settings);
 
-        btnRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Clicked on Rooms");
-            }
-        });
-
         btnGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Glob");
+                ((Main)getActivity()).changeView(1);
+
+            }
+        });
+
+        btnRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Clicked on Rooms");
+                ((Main)getActivity()).changeView(2);
             }
         });
 
@@ -50,12 +53,14 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Rou");
+                ((Main)getActivity()).changeView(3);
             }
         });
         btnFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Fre");
+                ((Main)getActivity()).changeView(4);
             }
         });
 
@@ -63,6 +68,7 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Set");
+                ((Main)getActivity()).changeView(5);
             }
         });
 

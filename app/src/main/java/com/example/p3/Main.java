@@ -532,6 +532,9 @@ public class Main extends AppCompatActivity {
         };
     }
 
+    public void changeView(int pos) {
+        mViewPager.setCurrentItem(pos);
+    }
     public void reportOnFragments() {
         int count = mStatePagerAdapter.getCount();
         Log.d(TAG, "no. fragments" + count);
@@ -539,7 +542,7 @@ public class Main extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        mViewPager.setCurrentItem(0);
+        changeView(0); // Base Fragment (Main menu)
 
         int count = mStatePagerAdapter.getCount();
         //Log.d(TAG, "no. fragments" + count);

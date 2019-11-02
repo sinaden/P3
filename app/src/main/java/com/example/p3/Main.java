@@ -550,7 +550,7 @@ public class Main extends AppCompatActivity {
         if (count == 0)
             super.onBackPressed();
         else {
-            Log.d(TAG, "no. fragmentsss" + count);
+            //Log.d(TAG, "no. fragmentsss" + count);
             //mViewPager.setCurrentItem(0);
             //mStatePagerAdapter.removeFragment(0);
         }

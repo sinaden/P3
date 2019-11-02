@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 
 public class Main extends AppCompatActivity {
@@ -401,6 +402,12 @@ public class Main extends AppCompatActivity {
         Toast.makeText(Main.this, "Settings", Toast.LENGTH_LONG).show();
     }
 
+    public void seeThreads(){
+        Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+        for (Thread t : threadSet){
+            Log.i(TAG, "seeThreads: " + t);
+        }
+    }
 
     public class ServerClass extends Thread {
         Socket socket;

@@ -311,8 +311,12 @@ public class Main extends AppCompatActivity {
         serverClass.start();
     }
     public void beClient() {
-        clientClass = new ClientClass(devices.get(0).inetAddress);
-        clientClass.start();
+
+        for (int i =0; i < devices.size(); i++) {
+            clientClass = new ClientClass(devices.get(i).inetAddress);
+            clientClass.start();
+        }
+
     }
 
     public void sendName() {

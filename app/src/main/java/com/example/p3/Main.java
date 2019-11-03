@@ -355,15 +355,15 @@ public class Main extends AppCompatActivity {
         for (int i =0; i < devices.size(); i++) {
 
 
-            //try {
+            try {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
                 clientClass.start();
                 serverClass.setName("ClientClass Thread");
 
                 Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
-         //   }catch (Exception e) {
-         //       Log.i(TAG, "Exception beClient: "+ e.getMessage());
-         //   }
+            }catch (Exception e) {
+                Log.i(TAG, "Exception beClient: "+ e.getMessage());
+            }
 
         }
 

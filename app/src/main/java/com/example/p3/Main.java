@@ -262,6 +262,11 @@ public class Main extends AppCompatActivity {
                     String tempMsg = new String(readBuff, 0, msg.arg1);
                     Toast.makeText(Main.this, tempMsg, Toast.LENGTH_LONG).show();
                     break;
+                case 2:
+                    byte[] readBuff2 = (byte[]) msg.obj;
+                    String tempMsg2 = new String(readBuff2, 0, msg.arg1);
+                    Log.d(TAG, "Message: "+ tempMsg2);;
+                    break;
             }
 
             return true;
@@ -348,15 +353,17 @@ public class Main extends AppCompatActivity {
     public void beClient() {
 
         for (int i =0; i < devices.size(); i++) {
-            try {
+
+
+            //try {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
                 clientClass.start();
                 serverClass.setName("ClientClass Thread");
 
                 Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
-            }catch (Exception e) {
-                Log.i(TAG, "beClient: "+ e.getMessage());
-            }
+         //   }catch (Exception e) {
+         //       Log.i(TAG, "Exception beClient: "+ e.getMessage());
+         //   }
 
         }
 
@@ -409,6 +416,7 @@ public class Main extends AppCompatActivity {
         Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
         for (Thread t : threadSet){
             Log.i(TAG, "seeThreads: " + t);
+
         }
     }
 
@@ -457,7 +465,7 @@ public class Main extends AppCompatActivity {
                 try {
                     bytes = inputStream.read(buffer);
                     if (bytes > 0) {
-                        handler.obtainMessage(1, bytes, -1, buffer).sendToTarget();
+                        handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

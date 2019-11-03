@@ -358,7 +358,6 @@ public class Main extends AppCompatActivity {
             try {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
                 clientClass.start();
-                serverClass.setName("ClientClass Thread");
 
                 Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
             }catch (Exception e) {

@@ -90,7 +90,8 @@ public class Main extends AppCompatActivity {
     ServerClass serverClass;
     ClientClass clientClass;
     SendReceive sendReceive;
-
+    ConnectionHandler sendReceive2;
+    //Thread peerConnection;
 
     // Sina:
     private StatePagerAdapter mStatePagerAdapter;
@@ -379,9 +380,19 @@ public class Main extends AppCompatActivity {
         new Thread("sendName") {
             @Override
             public void run() {
+                sendReceive2.write(NICKNAME.getBytes());
+            }
+        }.start();
+
+        /*
+        new Thread("sendName") {
+            @Override
+            public void run() {
                 sendReceive.write(NICKNAME.getBytes());
             }
         }.start();
+
+         */
     }
 
     public void chatRoomsButton(View view) {
@@ -425,6 +436,39 @@ public class Main extends AppCompatActivity {
 
         }
     }
+    public class Server {
+        Socket socket;
+        ServerSocket serverSocket;
+        public Server() {
+            try {
+                //Looper.prepare();
+                Log.e(TAG, "ServerClass: port no is " + portNo);
+                serverSocket = new ServerSocket(portNo);
+                localPort = serverSocket.getLocalPort();
+
+
+                int numConnections = 0;
+                while(numConnections < 3){
+                    Log.e(TAG, "numCon "+ numConnections );
+                    //socket = server.accept();
+                    socket = serverSocket.accept();
+                    Thread peerConnection = new Thread(new ConnectionHandler(socket));
+                    peerConnection.start();
+                    numConnections++;
+                }
+                /*
+                socket = serverSocket.accept();
+                sendReceive = new SendReceive(socket);
+                sendReceive.start();
+                sendReceive.setName("SendReceive/fromServer");
+                */
+                Log.i(TAG, "close server socket");
+                socket.close();
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+    }
 
     public class ServerClass extends Thread {
         Socket socket;
@@ -444,8 +488,8 @@ public class Main extends AppCompatActivity {
                     Log.e(TAG, "numCon "+ numConnections );
                     //socket = server.accept();
                     socket = serverSocket.accept();
-                    Thread peerConnection = new Thread(new ConnectionHandler(socket));
-                    peerConnection.start();
+                    sendReceive2 = new ConnectionHandler(socket);
+                    sendReceive2.start();
                     numConnections++;
                 }
                 /*

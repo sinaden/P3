@@ -71,6 +71,7 @@ public class Main extends AppCompatActivity {
     private Thread wifiSignalCheck;
     private androidx.appcompat.widget.Toolbar toolbar;
 
+
     WifiManager wifiManager;
     WifiInfo wifiInfo;
     String macAddress;
@@ -349,6 +350,7 @@ public class Main extends AppCompatActivity {
         beClient();
     }
     public void beServer() {
+        Log.i(TAG, "beServer: "+" I am a server now");
         serverClass = new ServerClass();
         serverClass.start();
         serverClass.setName("ServerClass Thread");

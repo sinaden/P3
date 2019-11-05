@@ -17,6 +17,7 @@ import android.net.wifi.WifiManager;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -432,6 +433,7 @@ public class Main extends AppCompatActivity {
         @Override
         public void run() {
             try {
+                Looper.prepare();
                 Log.e(TAG, "ServerClass: port no is " + portNo);
                 serverSocket = new ServerSocket(portNo);
                 localPort = serverSocket.getLocalPort();

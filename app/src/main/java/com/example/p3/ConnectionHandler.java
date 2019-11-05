@@ -50,6 +50,7 @@ public class ConnectionHandler  extends Main implements Runnable{
     @Override
     public void run() { // I added a try and catch to be able to close inputStream which konrad did not implement in SendReceive Class
         try {
+            Log.i(TAG, "Client Accepted");
             byte[] buffer = new byte[1024];
             int bytes;
 

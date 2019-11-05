@@ -451,6 +451,8 @@ public class Main extends AppCompatActivity {
                 sendReceive.start();
                 sendReceive.setName("SendReceive/fromServer");
                 */
+                Log.i(TAG, "close server socket");
+                socket.close();
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }

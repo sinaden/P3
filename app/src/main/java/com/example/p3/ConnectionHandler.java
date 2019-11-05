@@ -16,7 +16,7 @@ public class ConnectionHandler  extends Main implements Runnable{
     private InputStream inputStream;
     private OutputStream outputStream;
 
-    /*
+
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -24,7 +24,7 @@ public class ConnectionHandler  extends Main implements Runnable{
                 case 1:
                     byte[] readBuff = (byte[]) msg.obj;
                     String tempMsg = new String(readBuff, 0, msg.arg1);
-                    makeToastMessage(tempMsg);
+                   // makeToastMessage(tempMsg);
                     //Toast.makeText(Main.this, tempMsg, Toast.LENGTH_LONG).show();
                     break;
                 case 2:
@@ -37,12 +37,13 @@ public class ConnectionHandler  extends Main implements Runnable{
             return true;
         }
     });
-*/
+
     public ConnectionHandler(Socket socket){
         this.socket = socket;
         try {
             inputStream = socket.getInputStream();
             outputStream = socket.getOutputStream();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

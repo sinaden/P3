@@ -439,6 +439,7 @@ public class Main extends AppCompatActivity {
 
                 int numConnections = 0;
                 while(numConnections < 3){
+                    Log.e(TAG, "numCon "+ numConnections );
                     //socket = server.accept();
                     socket = serverSocket.accept();
                     Thread peerConnection = new Thread(new ConnectionHandler(socket));

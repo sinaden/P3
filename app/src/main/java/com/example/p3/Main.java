@@ -253,6 +253,10 @@ public class Main extends AppCompatActivity {
         viewPager.setAdapter(mStatePagerAdapter);
 
     }
+
+    public void makeToastMessage(String tempMsg) {
+        Toast.makeText(Main.this, tempMsg, Toast.LENGTH_LONG).show();
+    }
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -429,11 +433,22 @@ public class Main extends AppCompatActivity {
                 Log.e(TAG, "ServerClass: port no is " + portNo);
                 serverSocket = new ServerSocket(portNo);
                 localPort = serverSocket.getLocalPort();
+
+
+                int numConnections = 0;
+                while(numConnections < 3){
+                    //socket = server.accept();
+                    socket = serverSocket.accept();
+                    Thread peerConnection = new Thread(new ConnectionHandler(socket));
+                    peerConnection.start();
+                    numConnections++;
+                }
+                /*
                 socket = serverSocket.accept();
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
                 sendReceive.setName("SendReceive/fromServer");
-
+                */
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }

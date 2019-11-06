@@ -63,6 +63,7 @@ public class ConnectionHandler  extends Thread{
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    break;
                 }
             }
             inputStream.close();

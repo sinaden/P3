@@ -380,6 +380,42 @@ public class Main extends AppCompatActivity {
     public void sendName() {
         Log.e(TAG, "Number of clients: "+ clients.size());
         final int nClients = clients.size();
+
+        for (int i = 0; i < nClients; i++) {
+            //    sendReceive2.write(NICKNAME.getBytes());
+            final int index = i;
+            new Thread("sendName") {
+                @Override
+                public void run() {
+                    sendReceive2 = clients.get(index);
+                    sendReceive2.write(NICKNAME.getBytes());
+                    /*
+                    for (int i = 0; i < nClients; i++) {
+                        //    sendReceive2.write(NICKNAME.getBytes());
+                        sendReceive2 = clients.get(i);
+                        sendReceive2.write(NICKNAME.getBytes());
+                    }
+
+                     */
+                }
+            }.start();
+        }
+
+
+        /*
+        new Thread("sendName") {
+            @Override
+            public void run() {
+                sendReceive.write(NICKNAME.getBytes());
+            }
+        }.start();
+
+         */
+    }
+
+    public void sendNameBackup() {
+        Log.e(TAG, "Number of clients: "+ clients.size());
+        final int nClients = clients.size();
         new Thread("sendName") {
             @Override
             public void run() {
@@ -401,7 +437,6 @@ public class Main extends AppCompatActivity {
 
          */
     }
-
     public void chatRoomsButton(View view) {
         Toast.makeText(Main.this, "Chat Rooms", Toast.LENGTH_LONG).show();
        // Log.i(TAG, NICKNAME);

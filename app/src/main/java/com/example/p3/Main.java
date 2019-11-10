@@ -403,8 +403,9 @@ public class Main extends AppCompatActivity {
     public void beClient() {
         List<Integer>blackList = new ArrayList<>();
         for (int i =0; i < devices.size(); i++) {
+            Log.i(TAG, "beClient: Gonna be a client to " + devices.get(i).macAddress
+                    +" port:" + devices.get(i).port);
 
-            boolean madeit= true;
             try {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
                 clientClass.start();
@@ -412,14 +413,9 @@ public class Main extends AppCompatActivity {
                 //Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
             }catch (Exception e) {
                 Log.i(TAG, "Exception beClient: "+ e.getMessage());
-                madeit = false;
                 blackList.add(i);
             }
-            if(madeit) {
-                Log.i(TAG, "beClient: I am connected to " + devices.get(i).macAddress
-                                +" port:" + devices.get(i).port);
 
-            }
 
         }
         for (int k : blackList){
@@ -668,8 +664,11 @@ public class Main extends AppCompatActivity {
                 sendReceive.setName("sendRecieve/fromClient");
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
+                Log.d(TAG, "Denied Connection: " + this.hostAddress + " port " + this.port);
+
                 return;
             }
+            Log.d(TAG, "Successfully connected to :" + this.hostAddress + " port " + this.port);
         }
 
     }

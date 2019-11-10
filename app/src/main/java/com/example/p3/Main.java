@@ -219,6 +219,7 @@ public class Main extends AppCompatActivity {
     }
 
 
+
     // Sine : find free port
     private static int findFreePort() {
         ServerSocket socket = null;
@@ -577,6 +578,7 @@ public class Main extends AppCompatActivity {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    break;
                 }
             }
         }
@@ -730,6 +732,11 @@ public class Main extends AppCompatActivity {
             }
         };
     }
+    public void tearDownNSD() {
+
+        nsdManager.unregisterService(registrationListener);
+        nsdManager.stopServiceDiscovery(discoveryListener);
+    }
 
     public void showDevices() {
         int cnt = 0;
@@ -748,6 +755,9 @@ public class Main extends AppCompatActivity {
         int count = mStatePagerAdapter.getCount();
         Log.d(TAG, "no. fragments" + count);
     }
+
+
+
     @Override
     public void onBackPressed() {
 
@@ -768,15 +778,26 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (nsdManager != null) {
+            registerService(portNo);
+            //nsdManager.discoverServices();
+            nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+        }
     }
 
     @Override
     protected void onPause() {
+
+        if (nsdManager != null){
+            tearDownNSD();
+        }
+
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
+        tearDownNSD();
         super.onDestroy();
 
     }

@@ -15,6 +15,7 @@ import android.net.nsd.NsdServiceInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -69,7 +70,7 @@ public class Main extends AppCompatActivity {
     private ImageView mWifiSignal;
     private TextView mWifiSSID;
     private int level;
-    //private Thread wifiSignalCheck;
+    private Thread wifiSignalCheck;
     private androidx.appcompat.widget.Toolbar toolbar;
 
 
@@ -115,7 +116,9 @@ public class Main extends AppCompatActivity {
 
 
         // https://stackoverflow.com/questions/5161951/android-only-the-original-thread-that-created-a-view-hierarchy-can-touch-its-vi
-        wifiSignalCheck();
+        //wifiSignalCheck();
+
+        new WifiSignalCheckBG().execute();
         /*
         wifiSignalCheck = new Thread() {
             @Override
@@ -135,6 +138,8 @@ public class Main extends AppCompatActivity {
         wifiSignalCheck.start();
 
          */
+
+
         macAddress = getMacAddr();
 
 
@@ -227,29 +232,26 @@ public class Main extends AppCompatActivity {
     }
 
 
-    private void wifiSignalCheck() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        setWifiSignal();
-                        Handler h = new Handler();
-                        h.postDelayed(new Runnable() {
-                            @Override public void run() {
-                                //new intent here
-                            }
-                        }, 10000);
-                        //sleep(5000);
-                        //wait(5000);
-                    } catch (Exception e) {
-                        Log.e(TAG, "run (terminate me): " + e.getMessage());
-                    }
+    private class WifiSignalCheckBG extends AsyncTask<Void,Void,Void> {
 
 
+        protected Void doInBackground(Void... params) {
+            while (true) {
+                try {
+                    Log.i(TAG, "doInBackground: Scanning");
+                    setWifiSignal();
+                    Thread.sleep(10000);
+
+                    //sleep(5000);
+                    //wait(5000);
+                } catch (Exception e) {
+                    Log.e(TAG, "run (terminate me): " + e.getMessage());
                 }
+
+
             }
-        });
+        }
+
     }
 
     // Sine : find free port

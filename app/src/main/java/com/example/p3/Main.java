@@ -617,7 +617,7 @@ public class Main extends AppCompatActivity {
         }
 
         @Override
-        public void run() {
+        public void run(){
             try {
 
                 socket.connect(new InetSocketAddress(hostAddress, port), 500);
@@ -625,7 +625,8 @@ public class Main extends AppCompatActivity {
                 sendReceive.start();
                 sendReceive.setName("sendRecieve/fromClient");
             } catch (Exception e) {
-                Log.i(TAG, e.getMessage());
+                Log.e(TAG, e.getMessage());
+                throw new ArithmeticException("Not valid!!");
             }
         }
 

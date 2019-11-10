@@ -121,7 +121,7 @@ public class Main extends AppCompatActivity {
                         setWifiSignal();
                         sleep(10000);
                     } catch (Exception e) {
-
+                        Log.e(TAG, "run (terminate me): " + e.getMessage());
                     }
 
 
@@ -559,6 +559,7 @@ public class Main extends AppCompatActivity {
                 socket.close();
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
+                return;
             }
         }
     }
@@ -575,6 +576,7 @@ public class Main extends AppCompatActivity {
                 outputStream = socket.getOutputStream();
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
         }
 
@@ -591,7 +593,8 @@ public class Main extends AppCompatActivity {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    break;
+                    return;
+                    //break;
                 }
             }
         }
@@ -601,6 +604,7 @@ public class Main extends AppCompatActivity {
                 outputStream.write(bytes);
             } catch (IOException e) {
                 Log.i(TAG, e.getMessage());
+                return;
             }
         }
     }
@@ -626,7 +630,7 @@ public class Main extends AppCompatActivity {
                 sendReceive.setName("sendRecieve/fromClient");
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
-                throw new ArithmeticException("Not valid!!");
+                return;
             }
         }
 

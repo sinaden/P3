@@ -779,6 +779,7 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        Log.e(TAG, "onResume: ");
         super.onResume();
 
         try {
@@ -794,7 +795,7 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-
+        Log.e(TAG, "onPause: ");
         if (nsdManager != null){
             tearDownNSD();
         }
@@ -804,6 +805,7 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        Log.e(TAG, "onDestroy: ");
         tearDownNSD();
         super.onDestroy();
 

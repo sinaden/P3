@@ -234,7 +234,13 @@ public class Main extends AppCompatActivity {
                 while (true) {
                     try {
                         setWifiSignal();
-                        Thread.sleep(10000);
+                        Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override public void run() {
+                                //new intent here
+                            }
+                        }, 10000);
+                        //sleep(5000);
                         //wait(5000);
                     } catch (Exception e) {
                         Log.e(TAG, "run (terminate me): " + e.getMessage());

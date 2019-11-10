@@ -242,6 +242,12 @@ public class Main extends AppCompatActivity {
                     setWifiSignal();
                     Thread.sleep(10000);
 
+                    if (beenToOnCreate) {
+                        Log.i(TAG, "doInBackground: Scanning NSDs");
+                        nsdManager.discoverServices(SERVICE_TYPE,
+                                NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+
+                    }
                     //sleep(5000);
                     //wait(5000);
                 } catch (Exception e) {

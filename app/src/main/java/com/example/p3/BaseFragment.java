@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class BaseFragment extends Fragment {
-    private static final String TAG = "BaseFragment";
+    private static final String TAG = "BaseFragment WiFi";
 
     private ImageView btnRoom;
     private ImageView btnGlobal;
@@ -80,5 +80,27 @@ public class BaseFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        Log.e(TAG, "onStart: ");
+        super.onStart();
+    }
 
+    @Override
+    public void onResume() {
+        Log.e(TAG, "onResume: " );
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        Log.e(TAG, "onPause: " );
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.e(TAG, "onDestroy: " );
+        super.onDestroy();
+    }
 }

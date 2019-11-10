@@ -786,7 +786,7 @@ public class Main extends AppCompatActivity {
             if (!beenToOnCreate) {
                 //registerService(portNo);
                 //nsdManager.discoverServices();
-                nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+              //  nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
             }
         }catch (Exception e) {
             Log.e(TAG, "onResume: "+ e.getMessage());

@@ -234,8 +234,8 @@ public class Main extends AppCompatActivity {
                 while (true) {
                     try {
                         setWifiSignal();
-                        //sleep(10000);
-                        wait(5000);
+                        Thread.sleep(10000);
+                        //wait(5000);
                     } catch (Exception e) {
                         Log.e(TAG, "run (terminate me): " + e.getMessage());
                     }

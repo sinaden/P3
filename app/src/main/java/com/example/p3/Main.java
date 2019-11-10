@@ -374,7 +374,7 @@ public class Main extends AppCompatActivity {
                 //Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
             }catch (Exception e) {
                 Log.i(TAG, "Exception beClient: "+ e.getMessage());
-                madeit = false
+                madeit = false;
                 blackList.add(i);
             }
             if(madeit) {

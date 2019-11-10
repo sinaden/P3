@@ -363,19 +363,30 @@ public class Main extends AppCompatActivity {
 
     }
     public void beClient() {
-
+        List<Integer>blackList = new ArrayList<>();
         for (int i =0; i < devices.size(); i++) {
 
-
+            boolean madeit= true;
             try {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
                 clientClass.start();
 
-                Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
+                //Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
             }catch (Exception e) {
                 Log.i(TAG, "Exception beClient: "+ e.getMessage());
+                madeit = false
+                blackList.add(i);
+            }
+            if(madeit) {
+                Log.i(TAG, "beClient: I am connected to " + devices.get(i).macAddress
+                                +" port:" + devices.get(i).port);
+
             }
 
+        }
+        for (int k : blackList){
+            Log.e(TAG, "Couldn't connect to : " + devices.get(k).macAddress
+                            +" port "+ devices.get(k).port );
         }
 
     }

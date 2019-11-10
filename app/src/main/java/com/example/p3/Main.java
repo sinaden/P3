@@ -779,7 +779,7 @@ public class Main extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (nsdManager != null) {
-            registerService(portNo);
+            //registerService(portNo);
             //nsdManager.discoverServices();
             nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
         }

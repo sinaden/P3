@@ -796,9 +796,9 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onPause() {
         Log.e(TAG, "onPause: ");
-        if (nsdManager != null){
-            tearDownNSD();
-        }
+    //    if (nsdManager != null){
+    //        tearDownNSD();
+    //    }
 
         super.onPause();
     }

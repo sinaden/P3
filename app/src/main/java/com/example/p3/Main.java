@@ -96,6 +96,7 @@ public class Main extends AppCompatActivity {
     // Sina:
     private StatePagerAdapter mStatePagerAdapter;
     private ViewPager mViewPager;
+    static boolean beenToOnCreate = false;
 
     List<ConnectionHandler> clients = new ArrayList<ConnectionHandler>();
 
@@ -199,6 +200,7 @@ public class Main extends AppCompatActivity {
         Drawer drawer = drawerBuilder.build();
 
 
+        beenToOnCreate = true;
         portNo = findFreePort();
         Log.i(TAG, "onCreate: port no" + portNo);
 
@@ -780,7 +782,7 @@ public class Main extends AppCompatActivity {
         super.onResume();
 
         try {
-            if (nsdManager != null) {
+            if (!beenToOnCreate) {
                 //registerService(portNo);
                 //nsdManager.discoverServices();
                 nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);

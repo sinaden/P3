@@ -778,10 +778,15 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (nsdManager != null) {
-            //registerService(portNo);
-            //nsdManager.discoverServices();
-            nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+
+        try {
+            if (nsdManager != null) {
+                //registerService(portNo);
+                //nsdManager.discoverServices();
+                nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+            }
+        }catch (Exception e) {
+            Log.e(TAG, "onResume: "+ e.getMessage());
         }
     }
 

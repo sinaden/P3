@@ -69,7 +69,7 @@ public class Main extends AppCompatActivity {
     private ImageView mWifiSignal;
     private TextView mWifiSSID;
     private int level;
-    private Thread wifiSignalCheck;
+    //private Thread wifiSignalCheck;
     private androidx.appcompat.widget.Toolbar toolbar;
 
 
@@ -113,6 +113,10 @@ public class Main extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                 0);
 
+
+        // https://stackoverflow.com/questions/5161951/android-only-the-original-thread-that-created-a-view-hierarchy-can-touch-its-vi
+        wifiSignalCheck();
+        /*
         wifiSignalCheck = new Thread() {
             @Override
             public void run() {
@@ -129,6 +133,8 @@ public class Main extends AppCompatActivity {
             }
         };
         wifiSignalCheck.start();
+
+         */
         macAddress = getMacAddr();
 
 
@@ -221,6 +227,24 @@ public class Main extends AppCompatActivity {
     }
 
 
+    private void wifiSignalCheck() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        setWifiSignal();
+                        //sleep(10000);
+                        wait(5000);
+                    } catch (Exception e) {
+                        Log.e(TAG, "run (terminate me): " + e.getMessage());
+                    }
+
+
+                }
+            }
+        });
+    }
 
     // Sine : find free port
     private static int findFreePort() {

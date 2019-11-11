@@ -770,9 +770,15 @@ public class Main extends AppCompatActivity {
     }
     public void tearDownChecker(int switch1) {
         if (switch1 == 1) {
-            cleaner = 2;
+            cleaner += 1;
         }
-        else{
+        if (switch1 == 0){
+            cleaner -= 1;
+        }
+        if (cleaner == 2) {
+            tearDownNSD();
+        }
+        if (cleaner == -2) {
             cleaner = 0;
         }
     }
@@ -827,10 +833,8 @@ public class Main extends AppCompatActivity {
 
 
         Log.e(TAG, "onPause: ");
+        tearDownChecker(1);
 
-        if (cleaner == 2) {
-            tearDownNSD();
-        }
        // if (beenToOnCreate)
             //Log.e(TAG, "onDestroy: ");
       //      tearDownNSD();

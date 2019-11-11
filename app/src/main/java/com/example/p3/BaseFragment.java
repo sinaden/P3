@@ -88,16 +88,17 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onResume() {
-        ((Main)getActivity()).tearDownChecker(0);
+       //((Main)getActivity()).tearDownChecker(0);
         Log.e(TAG, "onResume: " );
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        ((Main)getActivity()).tearDownChecker(1);
+        ((Main)getActivity()).tearDownChecker(3);
         Log.e(TAG, "onPause: " );
 
+    //    onPause();
         super.onPause();
     }
 

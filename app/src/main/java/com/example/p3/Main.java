@@ -762,26 +762,27 @@ public class Main extends AppCompatActivity {
             }
         };
     }
-    public void tearDownNSD() {
+    private void tearDownNSD() {
 
         nsdManager.unregisterService(registrationListener);
         nsdManager.stopServiceDiscovery(discoveryListener);
+        discoveryListener = null;
+
+        registrationListener = null;
+        nsdManager = null;
+
         Log.e(TAG, "NSD resources removed");
-        onDestroy();
+
+        finish();
+
     }
     public void tearDownChecker(int switch1) {
-        if (switch1 == 1) {
-            cleaner += 1;
-        }
-        if (switch1 == 0){
-            cleaner -= 1;
-        }
-        if (cleaner == 2) {
+        if (switch1 == 3) {
             tearDownNSD();
+            return;
         }
-        if (cleaner == -2) {
-            cleaner = 0;
-        }
+        return;
+
     }
     public void showDevices() {
         int cnt = 0;
@@ -823,7 +824,7 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onResume() {
         Log.e(TAG, "onResume: ");
-        tearDownChecker(0);
+    //   tearDownChecker(0);
         super.onResume();
 
 
@@ -834,7 +835,7 @@ public class Main extends AppCompatActivity {
 
 
         Log.e(TAG, "onPause: ");
-        tearDownChecker(1);
+        //tearDownChecker(1);
 
        // if (beenToOnCreate)
             //Log.e(TAG, "onDestroy: ");

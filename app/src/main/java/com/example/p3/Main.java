@@ -767,6 +767,7 @@ public class Main extends AppCompatActivity {
         nsdManager.unregisterService(registrationListener);
         nsdManager.stopServiceDiscovery(discoveryListener);
         Log.e(TAG, "NSD resources removed");
+        onDestroy();
     }
     public void tearDownChecker(int switch1) {
         if (switch1 == 1) {

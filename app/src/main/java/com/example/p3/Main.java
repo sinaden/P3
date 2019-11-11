@@ -672,21 +672,22 @@ public class Main extends AppCompatActivity {
             public void onServiceRegistered(NsdServiceInfo serviceInfo) {
                 serviceName = serviceInfo.getServiceName();
                 Log.i(TAG, "Service registered: " + serviceName);
+                Log.e(TAG, "onServiceRegistered: ServiceInfo " + serviceInfo.toString()  );
             }
 
             @Override
             public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
-                Log.i(TAG, "Registration failed, error code: " + errorCode);
+                Log.e(TAG, "Registration failed, error code: " + errorCode);
             }
 
             @Override
             public void onServiceUnregistered(NsdServiceInfo serviceInfo) {
-                Log.i(TAG, "Service successfully unregistered");
+                Log.e(TAG, "Service successfully unregistered");
             }
 
             @Override
             public void onUnregistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
-                Log.i(TAG, "Service unregistering failed, error code: " + errorCode);
+                Log.e(TAG, "Service unregistering failed, error code: " + errorCode);
             }
         };
 

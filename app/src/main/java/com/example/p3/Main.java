@@ -116,28 +116,9 @@ public class Main extends AppCompatActivity {
 
 
         // https://stackoverflow.com/questions/5161951/android-only-the-original-thread-that-created-a-view-hierarchy-can-touch-its-vi
-        //wifiSignalCheck();
+        // AsyncTask is suggested in android instead of working with threads
 
         new WifiSignalCheckBG().execute();
-        /*
-        wifiSignalCheck = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        setWifiSignal();
-                        sleep(10000);
-                    } catch (Exception e) {
-                        Log.e(TAG, "run (terminate me): " + e.getMessage());
-                    }
-
-
-                }
-            }
-        };
-        wifiSignalCheck.start();
-
-         */
 
 
         macAddress = getMacAddr();
@@ -242,14 +223,6 @@ public class Main extends AppCompatActivity {
                     setWifiSignal();
                     Thread.sleep(10000);
 
-                    if (beenToOnCreate) {
-                        Log.i(TAG, "doInBackground: Scanning NSDs");
-                        nsdManager.discoverServices(SERVICE_TYPE,
-                                NsdManager.PROTOCOL_DNS_SD, discoveryListener);
-
-                    }
-                    //sleep(5000);
-                    //wait(5000);
                 } catch (Exception e) {
                     Log.e(TAG, "run (terminate me): " + e.getMessage());
                 }
@@ -526,7 +499,7 @@ public class Main extends AppCompatActivity {
 
         }
     }
-    public class Server {
+    public class Server { // No use, could be deleted
         Socket socket;
         ServerSocket serverSocket;
         public Server() {
@@ -858,8 +831,17 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.e(TAG, "onDestroy: ");
-        tearDownNSD();
+
+
+        try {
+            Log.e(TAG, "onDestroy: ");
+            tearDownNSD();
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+
+            Log.e(TAG, "onDestroy: Exception");
+            e.printStackTrace();
+        }
         super.onDestroy();
 
     }

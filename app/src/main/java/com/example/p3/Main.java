@@ -678,6 +678,7 @@ public class Main extends AppCompatActivity {
             @Override
             public void onServiceRegistered(NsdServiceInfo serviceInfo) {
                 serviceName = serviceInfo.getServiceName();
+                serviceInfo.setServiceType(SERVICE_TYPE);
                 Log.i(TAG, "Service registered: " + serviceName);
                 Log.e(TAG, "onServiceRegistered: ServiceInfo " + serviceInfo.toString()  );
             }

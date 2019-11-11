@@ -705,12 +705,12 @@ public class Main extends AppCompatActivity {
         discoveryListener = new NsdManager.DiscoveryListener() {
             @Override
             public void onDiscoveryStarted(String serviceType) {
-                Log.i(TAG, "Service discovery started " + serviceType);
+                Log.e(TAG, "Service discovery started " + serviceType);
             }
 
             @Override
             public void onServiceFound(NsdServiceInfo serviceInfo) {
-                Log.i(TAG, "Service discovery success " + serviceInfo.toString());
+                Log.e(TAG, "Service discovery success " + serviceInfo.toString());
                 if(!serviceInfo.getServiceType().equals(SERVICE_TYPE)){
                     Log.i(TAG, "Unknown Service Type: " + serviceInfo.getServiceType());
                 } else if(serviceInfo.getServiceName().equals(serviceName)){

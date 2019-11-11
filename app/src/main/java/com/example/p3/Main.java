@@ -196,8 +196,6 @@ public class Main extends AppCompatActivity {
 
         beenToOnCreate = true;
 
-        new NSDregisterSteps().execute();
-        /* Moved to WifiSignalCheck
         portNo = findFreePort();
         Log.i(TAG, "onCreate: port no" + portNo);
 
@@ -209,9 +207,9 @@ public class Main extends AppCompatActivity {
         nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
 
 
-         */
-        // Sina:
 
+        // Sina:
+        Log.e(TAG, "onCreate: start fragment stuff" );
         mStatePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
 
@@ -220,22 +218,6 @@ public class Main extends AppCompatActivity {
         // So for now it is called when the user clicks on Chatroom button
     }
 
-    private class NSDregisterSteps extends AsyncTask<Void,Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            portNo = findFreePort();
-            Log.i(TAG, "NSDregisterSteps: port no" + portNo);
-
-
-            initializeRegistrationListener();
-            registerService(portNo);
-            initializeResolveListener();
-            initializeDiscoveryListener();
-            nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
-
-            return null;
-        }
-    }
 
 
     private class WifiSignalCheckBG extends AsyncTask<Void,Void,Void> {

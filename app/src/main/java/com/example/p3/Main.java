@@ -202,10 +202,10 @@ public class Main extends AppCompatActivity {
 
         initializeRegistrationListener();
         registerService(portNo);
-        initializeResolveListener();
-        initializeDiscoveryListener();
-        nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
-
+     //   initializeResolveListener();
+    //    initializeDiscoveryListener();
+    //    nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+    // move to onRegister so that it would look after registration is done.
 
 
         // Sina:
@@ -681,6 +681,9 @@ public class Main extends AppCompatActivity {
                 serviceInfo.setServiceType(SERVICE_TYPE);
                 Log.i(TAG, "Service registered: " + serviceName);
                 Log.e(TAG, "onServiceRegistered: ServiceInfo " + serviceInfo.toString()  );
+                initializeResolveListener();
+                initializeDiscoveryListener();
+                nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
             }
 
             @Override

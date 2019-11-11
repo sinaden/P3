@@ -99,6 +99,8 @@ public class Main extends AppCompatActivity {
     private ViewPager mViewPager;
     static boolean beenToOnCreate = false;
 
+    static int cleaner = 0;
+
     List<ConnectionHandler> clients = new ArrayList<ConnectionHandler>();
 
     @Override
@@ -764,8 +766,16 @@ public class Main extends AppCompatActivity {
 
         nsdManager.unregisterService(registrationListener);
         nsdManager.stopServiceDiscovery(discoveryListener);
+        Log.e(TAG, "NSD resources removed");
     }
-
+    public void tearDownChecker(int switch1) {
+        if (switch1 == 1) {
+            cleaner = 2;
+        }
+        else{
+            cleaner = 0;
+        }
+    }
     public void showDevices() {
         int cnt = 0;
         for(Device i : devices) {
@@ -806,22 +816,25 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onResume() {
         Log.e(TAG, "onResume: ");
+        tearDownChecker(0);
         super.onResume();
 
-        try {
-            if (!beenToOnCreate) {
-                //registerService(portNo);
-                //nsdManager.discoverServices();
-              //  nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
-            }
-        }catch (Exception e) {
-            Log.e(TAG, "onResume: "+ e.getMessage());
-        }
+
     }
 
     @Override
     protected void onPause() {
+
+
         Log.e(TAG, "onPause: ");
+
+        if (cleaner == 2) {
+            tearDownNSD();
+        }
+       // if (beenToOnCreate)
+            //Log.e(TAG, "onDestroy: ");
+      //      tearDownNSD();
+
     //    if (nsdManager != null){
     //        tearDownNSD();
     //    }
@@ -833,15 +846,7 @@ public class Main extends AppCompatActivity {
     protected void onDestroy() {
 
 
-        try {
-            Log.e(TAG, "onDestroy: ");
-            tearDownNSD();
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
 
-            Log.e(TAG, "onDestroy: Exception");
-            e.printStackTrace();
-        }
         super.onDestroy();
 
     }

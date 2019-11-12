@@ -51,6 +51,7 @@ import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -394,7 +395,7 @@ public class Main extends AppCompatActivity {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
                 clientClass.start();
 
-                //Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
+                Log.i(TAG, "beClient: in the try clause ");
             }catch (Exception e) {
                 Log.i(TAG, "Exception beClient: "+ e.getMessage());
             }
@@ -625,11 +626,13 @@ public class Main extends AppCompatActivity {
 
     public class ClientClass extends Thread {
         Socket socket;
-        String hostAddress;
+        String hostAddressString;
+        InetAddress hostAddressInet;
         int port;
 
         public ClientClass(InetAddress hostAddress, int port) {
-            this.hostAddress = hostAddress.getHostAddress();
+            this.hostAddressString = hostAddress.getHostAddress();
+            this.hostAddressInet = hostAddress;
             this.port = port;
             socket = new Socket();
         }
@@ -637,18 +640,20 @@ public class Main extends AppCompatActivity {
         @Override
         public void run(){
             try {
-
-                socket.connect(new InetSocketAddress(hostAddress, port), 500);
+            // Maybe I shouldn't convert it to String. So that Huawi device can connect too.
+            //    socket.connect(new InetSocketAddress(hostAddressString, port), 500);
+                InetSocketAddress isa = new InetSocketAddress(hostAddressInet, port);
+                socket.connect(isa, 500);
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
                 sendReceive.setName("sendRecieve/fromClient");
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
-                Log.d(TAG, "Denied Connection: " + this.hostAddress + " port " + this.port);
+                Log.d(TAG, "Denied Connection: " + this.hostAddressInet + " port " + this.port);
 
                 return;
             }
-            Log.d(TAG, "Successfully connected to :" + this.hostAddress + " port " + this.port);
+            Log.d(TAG, "Successfully connected to :" + this.hostAddressInet + " port " + this.port);
         }
 
     }

@@ -676,8 +676,9 @@ public class Main extends AppCompatActivity {
             @Override
             public void onServiceRegistered(NsdServiceInfo serviceInfo) {
                 serviceName = serviceInfo.getServiceName();
+                InetAddress hostToShow = serviceInfo.getHost();
                 serviceInfo.setServiceType(SERVICE_TYPE);
-                Log.i(TAG, "Service registered: " + serviceName);
+                Log.i(TAG, "Service registered: name " + serviceName + " host ad:" + hostToShow);
                 Log.e(TAG, "onServiceRegistered: ServiceInfo " + serviceInfo.toString()  );
                 initializeResolveListener();
                 initializeDiscoveryListener();
@@ -800,7 +801,8 @@ public class Main extends AppCompatActivity {
             String k = i.macAddress;
             String x = Integer.toString(cnt);
             InetAddress kk = i.inetAddress;
-            Log.i(TAG, x + ":     " + k + " , " +kk.toString());
+            int port = i.port;
+            Log.i(TAG, x + "mcAd" + k + " ,host " +kk.toString()+ " , port " + port);
             cnt += 1;
         }
     }

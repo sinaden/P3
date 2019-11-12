@@ -383,10 +383,12 @@ public class Main extends AppCompatActivity {
 
     }
     public void beClient() {
-        List<Integer>blackList = new ArrayList<>();
+
         for (int i =0; i < devices.size(); i++) {
-            Log.i(TAG, "beClient: Gonna be a client to " + devices.get(i).macAddress
-                    +" port:" + devices.get(i).port);
+            Log.i(TAG,
+                    "beClient: Gonna be a client to " + devices.get(i).macAddress
+                    +" port:" + devices.get(i).port
+                    + " host ad " + devices.get(i).inetAddress );
 
             try {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
@@ -395,15 +397,11 @@ public class Main extends AppCompatActivity {
                 //Log.i(TAG, "beClient: I am connected to " + devices.get(i).inetAddress);
             }catch (Exception e) {
                 Log.i(TAG, "Exception beClient: "+ e.getMessage());
-                blackList.add(i);
             }
 
 
         }
-        for (int k : blackList){
-            Log.e(TAG, "Couldn't connect to : " + devices.get(k).macAddress
-                            +" port "+ devices.get(k).port );
-        }
+
 
     }
 
@@ -556,7 +554,7 @@ public class Main extends AppCompatActivity {
 
 
                 int numConnections = 0;
-                while(numConnections < 3){
+                while(numConnections < 1000){
                     Log.e(TAG, "numCon "+ numConnections );
                     //socket = server.accept();
                     socket = serverSocket.accept();

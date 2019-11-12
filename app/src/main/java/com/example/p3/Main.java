@@ -288,6 +288,7 @@ public class Main extends AppCompatActivity {
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
+            Log.e(TAG, "In handleMessage" );
             switch (msg.what) {
                 case 1:
                     byte[] readBuff = (byte[]) msg.obj;
@@ -295,9 +296,10 @@ public class Main extends AppCompatActivity {
                     Toast.makeText(Main.this, tempMsg, Toast.LENGTH_LONG).show();
                     break;
                 case 2:
+                    Log.e(TAG, "case 2 " );
                     byte[] readBuff2 = (byte[]) msg.obj;
                     String tempMsg2 = new String(readBuff2, 0, msg.arg1);
-                    Log.d(TAG, "Message: "+ tempMsg2);;
+                    Log.d(TAG, "Message: "+ tempMsg2);
                     break;
             }
 
@@ -620,6 +622,8 @@ public class Main extends AppCompatActivity {
                 try {
                     bytes = inputStream.read(buffer);
                     if (bytes > 0) {
+                        Log.e(TAG, "in if before handler");
+                        Log.e(TAG, "iibh buffer " + buffer.toString());
                         handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
                         Log.e(TAG, "in if");
                     }

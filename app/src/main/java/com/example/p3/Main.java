@@ -416,6 +416,7 @@ public class Main extends AppCompatActivity {
             new Thread("sendName") {
                 @Override
                 public void run() {
+                    //clients.get(index).socket;
                     sendReceive2 = clients.get(index);
                     sendReceive2.write(NICKNAME.getBytes());
                     /*
@@ -592,6 +593,7 @@ public class Main extends AppCompatActivity {
         private OutputStream outputStream;
 
         public SendReceive(Socket socket) {
+            Log.e(TAG, "SendReceive constructor" );
             this.socket = socket;
             try {
                 inputStream = socket.getInputStream();
@@ -601,19 +603,27 @@ public class Main extends AppCompatActivity {
                 e.printStackTrace();
                 return;
             }
+            Log.e(TAG, "SendReceive after out and in streams are valued " );
+            Log.e(TAG, "In " + inputStream.toString() );
+            Log.e(TAG, "Out " + outputStream.toString() );
+
         }
 
         @Override
         public void run() {
+            Log.e(TAG, "run method of sendReceive " );
             byte[] buffer = new byte[1024];
             int bytes;
 
             while (socket != null) {
+                Log.e(TAG, "in the while " );
                 try {
                     bytes = inputStream.read(buffer);
                     if (bytes > 0) {
                         handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
+                        Log.e(TAG, "in if");
                     }
+                    Log.e(TAG, "out if");
                 } catch (IOException e) {
                     e.printStackTrace();
                     Log.e(TAG, "Exception in SendReceive: "+ e.getMessage());
@@ -621,15 +631,18 @@ public class Main extends AppCompatActivity {
                     //break;
                 }
             }
+            Log.e(TAG, "After While " );
         }
 
         public void write(byte[] bytes) {
+            Log.e(TAG, "in write: ");
             try {
                 outputStream.write(bytes);
             } catch (IOException e) {
                 Log.i(TAG, e.getMessage());
                 return;
             }
+            Log.e(TAG, "gonna get out of write ");
         }
     }
 
@@ -661,6 +674,7 @@ public class Main extends AppCompatActivity {
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
                 sendReceive.setName("sendRecieve/fromClient");
+                Log.e(TAG, "ClientClass SR started" );
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
                 Log.d(TAG, "Denied Connection: " + this.hostAddressInet + " port " + this.port);

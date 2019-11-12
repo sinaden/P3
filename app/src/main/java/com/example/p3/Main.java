@@ -301,8 +301,8 @@ public class Main extends AppCompatActivity {
                     Log.e(TAG, "case 2  after byte readbuff2" );
                     Log.e(TAG, "Msg " + msg.obj );
                     String tempMsg2 = new String(readBuff2, 0, msg.arg1);
-                    Log.e(TAG, "case 2 temptM2 " );
-                    Log.d(TAG, "Message: "+ tempMsg2);
+                    Log.e(TAG, "case 2 temptM2 " + tempMsg2);
+                    Log.e(TAG, "Message: "+ tempMsg2);
                     break;
             }
 

@@ -30,7 +30,7 @@ public class ConnectionHandler  extends Thread{
                 case 2:
                     byte[] readBuff2 = (byte[]) msg.obj;
                     String tempMsg2 = new String(readBuff2, 0, msg.arg1);
-                    Log.d(TAG, "Message: "+ tempMsg2);;
+                    Log.d(TAG, "Message: "+ tempMsg2);
                     break;
             }
 
@@ -62,8 +62,10 @@ public class ConnectionHandler  extends Thread{
                         handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
                     }
                 } catch (IOException e) {
+                    Log.e(TAG, "ConnectionHandler Exception: " + e.getMessage() );
                     e.printStackTrace();
-                    break;
+                    return;
+                    //break;
                 }
             }
             inputStream.close();

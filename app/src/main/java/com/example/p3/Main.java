@@ -558,7 +558,14 @@ public class Main extends AppCompatActivity {
                 while(numConnections < 1000){
                     Log.e(TAG, "numCon "+ numConnections );
                     //socket = server.accept();
+
                     socket = serverSocket.accept();
+
+                    Log.e(TAG, "This client inetAd: "+ socket.getInetAddress());
+                    Log.e(TAG, "This client port: "+ socket.getPort());
+                    Log.e(TAG, "This client local port: "+ socket.getLocalPort());
+                    Log.e(TAG, "This client local ad: "+ socket.getLocalAddress());
+
                     sendReceive2 = new ConnectionHandler(socket);
                     sendReceive2.start();
                     clients.add(sendReceive2);
@@ -590,6 +597,7 @@ public class Main extends AppCompatActivity {
                 inputStream = socket.getInputStream();
                 outputStream = socket.getOutputStream();
             } catch (IOException e) {
+                Log.e(TAG, "SendReceive constructor Exception: " + e.getMessage());
                 e.printStackTrace();
                 return;
             }
@@ -608,6 +616,7 @@ public class Main extends AppCompatActivity {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.e(TAG, "Exception in SendReceive: "+ e.getMessage());
                     return;
                     //break;
                 }
@@ -642,7 +651,12 @@ public class Main extends AppCompatActivity {
             try {
             // Maybe I shouldn't convert it to String. So that Huawi device can connect too.
             //    socket.connect(new InetSocketAddress(hostAddressString, port), 500);
+                Log.e(TAG, "ClientClass hostAdInet " + hostAddressInet );
+                Log.e(TAG, "ClientClass hostAdString " + hostAddressString );
+                Log.e(TAG, "ClientClass port " + port );
+
                 InetSocketAddress isa = new InetSocketAddress(hostAddressInet, port);
+
                 socket.connect(isa, 500);
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();

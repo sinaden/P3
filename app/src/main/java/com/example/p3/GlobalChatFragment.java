@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,8 @@ public class GlobalChatFragment extends Fragment{
     private static final String TAG = "GlobalChatFragment";
     private Button btnSend;
     private EditText editText;
+    private LinearLayout linearLayout;
+
 
     @Nullable
     @Override
@@ -26,6 +30,9 @@ public class GlobalChatFragment extends Fragment{
         Log.d(TAG, "started");
         btnSend = (Button) view.findViewById(R.id.sendButton);
         editText = (EditText) view.findViewById(R.id.plain_text_input);
+        linearLayout = (LinearLayout) view.findViewById(R.id.ll_global_chat);
+
+
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +40,16 @@ public class GlobalChatFragment extends Fragment{
                 Toast.makeText(getActivity(), "Sent", Toast.LENGTH_SHORT).show();
                 //(Main)reportOnFragments
                 String message = String.valueOf(editText.getText());
+                // Add textview 1
+                TextView textView1;
+                textView1 = new TextView(getActivity());
+                textView1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+                textView1.setText("programmatically created TextView1");
+                textView1.setBackgroundColor(0xff66ff66); // hex color 0xAARRGGBB
+                textView1.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
+                linearLayout.addView(textView1);
+
                 Log.e(TAG, "Said " + message );
                 ((Main)getActivity()).reportOnFragments();
             }

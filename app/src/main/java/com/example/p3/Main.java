@@ -632,25 +632,38 @@ public class Main extends AppCompatActivity {
             byte[] buffer = new byte[1024];
             int bytes;
 
-            while (socket != null) {
-                Log.e(TAG, "in the while " );
-                try {
-                    bytes = inputStream.read(buffer);
-                    if (bytes > 0) {
-                        Log.e(TAG, "in if before handler");
-                        Log.e(TAG, "iibh buffer " + buffer.toString());
-                        handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
-                        Log.e(TAG, "in if");
+            try {
+                while (socket != null) {
+                    Log.e(TAG, "in the while ");
+                    try {
+                        bytes = inputStream.read(buffer);
+                        if (bytes > 0) {
+                            Log.e(TAG, "in if before handler");
+                            Log.e(TAG, "iibh buffer " + buffer.toString());
+                            handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
+                            Log.e(TAG, "in if");
+                        }
+                        Log.e(TAG, "out if");
+                    } catch (IOException e) {
+
+                        e.printStackTrace();
+                        Log.e(TAG, "Exception in SendReceive: " + e.getMessage());
+                        //return;
+                        break;
                     }
-                    Log.e(TAG, "out if");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "Exception in SendReceive: "+ e.getMessage());
-                    return;
-                    //break;
+                }
+                Log.e(TAG, "After While ");
+            }catch (Exception e) {
+                if (socket != null && !socket.isClosed()) {
+                    try {
+                        Log.e(TAG, "closing the socket " );
+                        socket.close();
+                    } catch (IOException e2)
+                    {
+                        e2.printStackTrace(System.err);
+                    }
                 }
             }
-            Log.e(TAG, "After While " );
         }
 
         public void write(byte[] bytes) {

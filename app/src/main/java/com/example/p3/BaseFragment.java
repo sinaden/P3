@@ -95,7 +95,7 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onPause() {
-        ((Main)getActivity()).tearDownChecker(3);
+    //    ((Main)getActivity()).tearDownChecker(3);
         Log.e(TAG, "onPause: " );
 
     //    onPause();

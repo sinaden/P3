@@ -100,7 +100,7 @@ public class Main extends AppCompatActivity {
     private ViewPager mViewPager;
     static boolean beenToOnCreate = false;
 
-    static int cleaner = 0;
+    static boolean cleaner = false;
 
     List<ConnectionHandler> clients = new ArrayList<ConnectionHandler>();
 
@@ -828,11 +828,16 @@ public class Main extends AppCompatActivity {
 
     }
     public void tearDownChecker(int switch1) {
-        if (switch1 == 3) {
-            tearDownNSD();
-            return;
+        if (switch1 == 3) { // Means it has been to at least one fragment before
+            //tearDownNSD();
+            cleaner = true;
+
         }
-        return;
+        else { // It's a call from the main activity pause.
+            if (cleaner) {
+                tearDownNSD();
+            }
+        }
 
     }
     public void showDevices() {
@@ -887,7 +892,7 @@ public class Main extends AppCompatActivity {
 
 
         Log.e(TAG, "onPause: ");
-        //tearDownChecker(1);
+        tearDownChecker(1);
 
        // if (beenToOnCreate)
             //Log.e(TAG, "onDestroy: ");

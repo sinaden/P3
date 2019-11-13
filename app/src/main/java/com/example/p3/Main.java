@@ -392,13 +392,16 @@ public class Main extends AppCompatActivity {
     public void beClient() {
 
         for (int i =0; i < devices.size(); i++) {
+            if (devices.get(i).isConnected()) {
+                continue;
+            }
             Log.i(TAG,
                     "beClient: Gonna be a client to " + devices.get(i).macAddress
                     +" port:" + devices.get(i).port
                     + " host ad " + devices.get(i).inetAddress );
 
             try {
-                clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port);
+                clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port, i);
                 clientClass.start();
 
                 Log.i(TAG, "beClient: in the try clause ");
@@ -499,7 +502,7 @@ public class Main extends AppCompatActivity {
 
     public void friendsButton(View view) {
         Toast.makeText(Main.this, "Friends", Toast.LENGTH_LONG).show();
-        clientClass = new ClientClass(devices.get(0).inetAddress, devices.get(0).port);
+        clientClass = new ClientClass(devices.get(0).inetAddress, devices.get(0).port, 1);
         clientClass.start();
     }
 
@@ -659,22 +662,26 @@ public class Main extends AppCompatActivity {
         String hostAddressString;
         InetAddress hostAddressInet;
         int port;
+        int index;
 
-        public ClientClass(InetAddress hostAddress, int port) {
+        public ClientClass(InetAddress hostAddress, int port, int index) {
             this.hostAddressString = hostAddress.getHostAddress();
             this.hostAddressInet = hostAddress;
             this.port = port;
+            this.index = index;
             socket = new Socket();
         }
 
         @Override
         public void run(){
+            boolean success = true;
             try {
             // Maybe I shouldn't convert it to String. So that Huawi device can connect too.
             //    socket.connect(new InetSocketAddress(hostAddressString, port), 500);
                 Log.e(TAG, "ClientClass hostAdInet " + hostAddressInet );
                 Log.e(TAG, "ClientClass hostAdString " + hostAddressString );
                 Log.e(TAG, "ClientClass port " + port );
+
 
                 InetSocketAddress isa = new InetSocketAddress(hostAddressInet, port);
 
@@ -683,13 +690,19 @@ public class Main extends AppCompatActivity {
                 sendReceive.start();
                 sendReceive.setName("sendRecieve/fromClient");
                 Log.e(TAG, "ClientClass SR started" );
+
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
-                Log.d(TAG, "Denied Connection: " + this.hostAddressInet + " port " + this.port);
+                Log.e(TAG, "Denied Connection: " + this.hostAddressInet + " port " + this.port);
+                success = false;
 
+            }finally {
+                if (success)
+                    Log.e(TAG, "Successfully connected to :" + this.hostAddressInet + " port " + this.port);
+
+                devices.get(this.index).changeStatus(success);
                 return;
             }
-            Log.d(TAG, "Successfully connected to :" + this.hostAddressInet + " port " + this.port);
         }
 
     }
@@ -924,11 +937,21 @@ class Device{
     String macAddress;
     InetAddress inetAddress;
     int port;
+    private boolean isConnected;
 
 
     public Device (String macAddress, InetAddress inetAddress, int port){
         this.macAddress = macAddress;
         this.inetAddress = inetAddress;
         this.port = port;
+        this.isConnected = false;
+    }
+    public void changeStatus(boolean status) {
+        this.isConnected = status;
+
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
 }

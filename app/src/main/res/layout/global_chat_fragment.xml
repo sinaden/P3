@@ -22,11 +22,12 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ScrollView
-        android:layout_width="273dp"
-        android:layout_height="433dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/colorPrimaryLight"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toEndOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/guideline12">
 

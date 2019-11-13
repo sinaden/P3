@@ -64,13 +64,23 @@ public class ConnectionHandler  extends Thread{
                 } catch (IOException e) {
                     Log.e(TAG, "ConnectionHandler Exception: " + e.getMessage() );
                     e.printStackTrace();
-                    return;
-                    //break;
+                    //return;
+                    break;
                 }
             }
+
             inputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Exception" + e.getMessage() );
+        }finally {
+            if(socket!=null && !socket.isClosed()) {
+                try {
+                    socket.close();
+
+                }catch (IOException e) {
+                    Log.e(TAG, "exception" + e.getMessage() );
+                }
+            }
         }
     }
     public void write(byte[] bytes) {

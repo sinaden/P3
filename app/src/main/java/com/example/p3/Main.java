@@ -587,10 +587,18 @@ public class Main extends AppCompatActivity {
                 sendReceive.start();
                 sendReceive.setName("SendReceive/fromServer");
                 */
-                Log.i(TAG, "close server socket");
-                socket.close();
+               // socket.close();
             } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
+                Log.e(TAG, "close server socket");
+
+                if (serverSocket != null && !serverSocket.isClosed()) {
+                    try {
+                        serverSocket.close();
+                    } catch (IOException e2)
+                    {
+                        e2.printStackTrace(System.err);
+                    }
+                }
                 return;
             }
         }

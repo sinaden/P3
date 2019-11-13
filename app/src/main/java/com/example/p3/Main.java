@@ -816,23 +816,30 @@ public class Main extends AppCompatActivity {
     }
     private void tearDownNSD() {
 
-        nsdManager.unregisterService(registrationListener);
-        nsdManager.stopServiceDiscovery(discoveryListener);
-        discoveryListener = null;
+        try {
+            nsdManager.unregisterService(registrationListener);
+            nsdManager.stopServiceDiscovery(discoveryListener);
+            discoveryListener = null;
 
-        registrationListener = null;
-        nsdManager = null;
+            registrationListener = null;
+            nsdManager = null;
 
-        Log.e(TAG, "NSD resources removed");
+            Log.e(TAG, "NSD resources removed");
 
-        finish();
+
+        } catch (Exception e) {
+            Log.e(TAG, "tearDownNSD: " + e.getMessage() );
+        }finally {
+            finish();
+        }
+
 
     }
     public void tearDownChecker(int switch1) {
         if (switch1 == 3 && cleaner) { // Means it has been to at least one fragment before
             tearDownNSD();
         }
-        else { // It's a call from the main activity pause.
+        else if(switch1 != 3) { // It's a call from the main activity pause.
             cleaner = true;
         }
 

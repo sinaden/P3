@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 
 public class GlobalChatFragment extends Fragment{
@@ -41,13 +42,17 @@ public class GlobalChatFragment extends Fragment{
                 //(Main)reportOnFragments
                 String message = String.valueOf(editText.getText());
                 // Add textview 1
-                TextView textView1;
-                textView1 = new TextView(getActivity());
+                AppCompatTextView textView1;
+
+                textView1 = new AppCompatTextView(getActivity());
                 textView1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT));
                 textView1.setText("programmatically created TextView1");
-                textView1.setBackgroundColor(0xff66ff66); // hex color 0xAARRGGBB
+                textView1.setBackgroundColor(R.drawable.box2); // hex color 0xAARRGGBB
                 textView1.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
+                textView1.setTextAppearance(R.style.TextAppearance_AppCompat_Large);
+                textView1.layout(6,6,6,6);
+
                 linearLayout.addView(textView1);
 
                 Log.e(TAG, "Said " + message );

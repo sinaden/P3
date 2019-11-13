@@ -2,6 +2,7 @@ package com.example.p3;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,11 @@ public class GlobalChatFragment extends Fragment{
                 textView1.setText("programmatically created TextView1");
                 textView1.setBackgroundColor(R.drawable.box2); // hex color 0xAARRGGBB
                 textView1.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
-                textView1.setTextAppearance(R.style.TextAppearance_AppCompat_Large);
-                textView1.layout(6,6,6,6);
+                //textView1.setTextAppearance(R.style.TextAppearance_AppCompat_Large);
+                textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+
+                //textView1.layout(6,6,6,6);
+
 
                 linearLayout.addView(textView1);
 

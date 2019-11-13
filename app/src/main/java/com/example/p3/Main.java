@@ -589,6 +589,8 @@ public class Main extends AppCompatActivity {
                 */
                // socket.close();
             } catch (IOException e) {
+
+            }finally {
                 Log.e(TAG, "close server socket");
 
                 if (serverSocket != null && !serverSocket.isClosed()) {
@@ -599,7 +601,7 @@ public class Main extends AppCompatActivity {
                         e2.printStackTrace(System.err);
                     }
                 }
-                return;
+
             }
         }
     }
@@ -653,7 +655,10 @@ public class Main extends AppCompatActivity {
                     }
                 }
                 Log.e(TAG, "After While ");
-            }catch (Exception e) {
+                inputStream.close();
+            }catch (IOException e) {
+                Log.e(TAG, "Exception "+ e.getMessage() );
+            }finally {
                 if (socket != null && !socket.isClosed()) {
                     try {
                         Log.e(TAG, "closing the socket " );
@@ -663,6 +668,7 @@ public class Main extends AppCompatActivity {
                         e2.printStackTrace(System.err);
                     }
                 }
+
             }
         }
 

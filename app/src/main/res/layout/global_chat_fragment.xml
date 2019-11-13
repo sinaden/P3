@@ -21,12 +21,82 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <ScrollView
+        android:layout_width="340dp"
+        android:layout_height="543dp"
+        android:background="@color/colorPrimaryLight"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/global_chat"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="118dp"
+                android:layout_gravity="center"
+                android:layout_margin="6dp"
+                android:background="@drawable/bgsample1"
+                android:includeFontPadding="true"
+                android:padding="20dp"
+                android:text="lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/settings"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/chat_rooms"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="213dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_margin="6dp"
+                android:background="@drawable/bgsample1"
+                android:includeFontPadding="true"
+                android:padding="20dp"
+                android:text="@string/chatRouletteFTitle"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/chat_roulette"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/default_avatar"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.11" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -34,7 +104,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.15"
+        app:layout_constraintGuide_percent="0.09"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -42,7 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="83dp" />
+        app:layout_constraintGuide_end="60dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -72,24 +142,23 @@
         app:layout_constraintVertical_bias="0.507" />
 
 
-
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/plain_text_input"
-        android:layout_width="236dp"
-        android:layout_height="49dp"
+        android:layout_width="308dp"
+        android:layout_height="66dp"
         android:background="@drawable/bgsample1"
 
+        android:importantForAutofill="no"
         android:inputType="text"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
-
-
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintHorizontal_bias="0.372"
 
+        app:layout_constraintHorizontal_bias="0.372"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.322"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="0.322" />
 
 
     <Button

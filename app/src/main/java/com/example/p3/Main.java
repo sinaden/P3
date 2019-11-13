@@ -886,8 +886,9 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        Log.e(TAG, "onPause: ");
+
         mainActivityPauses += 1;
+        Log.e(TAG, "onPause: " + mainActivityPauses);
         if (mainActivityPauses >= 2) {
             tearDownChecker(1);
         }

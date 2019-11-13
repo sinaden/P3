@@ -101,6 +101,7 @@ public class Main extends AppCompatActivity {
     static boolean beenToOnCreate = false;
 
     static boolean cleaner = false;
+    static int mainActivityPauses = 0;
 
     List<ConnectionHandler> clients = new ArrayList<ConnectionHandler>();
 
@@ -828,15 +829,11 @@ public class Main extends AppCompatActivity {
 
     }
     public void tearDownChecker(int switch1) {
-        if (switch1 == 3) { // Means it has been to at least one fragment before
-            //tearDownNSD();
-            cleaner = true;
-
+        if (switch1 == 3 && cleaner) { // Means it has been to at least one fragment before
+            tearDownNSD();
         }
         else { // It's a call from the main activity pause.
-            if (cleaner) {
-                tearDownNSD();
-            }
+            cleaner = true;
         }
 
     }
@@ -889,11 +886,11 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-
-
         Log.e(TAG, "onPause: ");
-        tearDownChecker(1);
-
+        mainActivityPauses += 1;
+        if (mainActivityPauses >= 2) {
+            tearDownChecker(1);
+        }
        // if (beenToOnCreate)
             //Log.e(TAG, "onDestroy: ");
       //      tearDownNSD();

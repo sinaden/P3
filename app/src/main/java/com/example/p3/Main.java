@@ -717,6 +717,7 @@ public class Main extends AppCompatActivity {
 
     //Registers name of the service in the local network
     public void registerService(int port) {
+        Log.e(TAG, "registerService: WELCOME " + portNo );
         NsdServiceInfo serviceInfo = new NsdServiceInfo();
 
         serviceInfo.setServiceName("Wi-Chat " + macAddress);

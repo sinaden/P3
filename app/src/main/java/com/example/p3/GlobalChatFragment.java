@@ -50,12 +50,13 @@ public class GlobalChatFragment extends Fragment{
                         LinearLayout.LayoutParams.WRAP_CONTENT));
                 textView1.setText("programmatically created TextView1");
 
-                textView1.setBackgroundResource(R.drawable.box1); // hex color 0xAARRGGBB
+                textView1.setBackgroundResource(R.drawable.box2); // hex color 0xAARRGGBB
                 textView1.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
                 //textView1.setTextAppearance(R.style.TextAppearance_AppCompat_Large);
                 textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-
-                textView1.layout(6,6,6,6);
+                textView1.setGravity(10);
+                textView1.setWidth(120);
+                textView1.forceLayout();
 
 
                 linearLayout.addView(textView1);

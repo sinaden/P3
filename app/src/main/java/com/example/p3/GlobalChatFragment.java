@@ -55,7 +55,7 @@ public class GlobalChatFragment extends Fragment{
                 //textView1.setTextAppearance(R.style.TextAppearance_AppCompat_Large);
                 textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 
-                //textView1.layout(6,6,6,6);
+                textView1.layout(6,6,6,6);
 
 
                 linearLayout.addView(textView1);

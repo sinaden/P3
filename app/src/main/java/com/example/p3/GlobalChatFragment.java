@@ -32,6 +32,8 @@ public class GlobalChatFragment extends Fragment{
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Sent", Toast.LENGTH_SHORT).show();
                 //(Main)reportOnFragments
+                String message = String.valueOf(editText.getText());
+                Log.e(TAG, "Said " + message );
                 ((Main)getActivity()).reportOnFragments();
             }
         });

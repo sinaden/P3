@@ -72,10 +72,12 @@
         app:layout_constraintVertical_bias="0.507" />
 
 
-    <EditText
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/plain_text_input"
         android:layout_width="236dp"
         android:layout_height="49dp"
+        android:background="@drawable/bgSample1"
 
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,23 +91,23 @@
         app:layout_constraintVertical_bias="0.322"
         android:importantForAutofill="no" />
 
+
     <Button
         android:id="@+id/sendButton"
-        style="@android:style/Widget.Holo.Light.Button"
 
 
-        android:layout_width="66dp"
-        android:layout_height="52dp"
-        android:background="#A45BC7C1"
+        android:layout_width="59dp"
+        android:layout_height="63dp"
+        android:background="@drawable/bgSample2"
         android:fontFamily="serif"
         android:text="@string/sendButton"
         android:textColor="#04136F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.304"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.326" />
+        app:layout_constraintVertical_bias="0.211" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

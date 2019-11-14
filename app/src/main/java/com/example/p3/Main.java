@@ -647,6 +647,8 @@ public class Main extends AppCompatActivity {
                         }
                         else {
                             inputStream.close();
+                            throw new IOException("It's fucked");
+
                         }
                         Log.e(TAG, "out if");
                     } catch (IOException e) {

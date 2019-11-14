@@ -664,6 +664,10 @@ public class Main extends AppCompatActivity {
 
                 Log.e(TAG, "Exception "+ e.getMessage() );
             }finally {
+                if (socket.isClosed()) {
+                    Log.e(TAG, "it's closed" );
+                }
+
                 if (socket != null && !socket.isClosed()) {
                     try {
                         Log.e(TAG, "closing the socket " );

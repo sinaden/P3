@@ -645,6 +645,9 @@ public class Main extends AppCompatActivity {
                             handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
                             Log.e(TAG, "in if");
                         }
+                        else {
+                            inputStream.close();
+                        }
                         Log.e(TAG, "out if");
                     } catch (IOException e) {
 

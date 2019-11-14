@@ -650,28 +650,20 @@ public class Main extends AppCompatActivity {
 
                         Log.e(TAG, "Exception in SendReceive: " + e.getMessage());
                      //   return;
-                    }finally {
-                        inputStream.close();
-                        if (socket != null && !socket.isClosed()) {
-                            try {
-                                Log.e(TAG, "closing the socket " );
-                                socket.close();
-                            } catch (IOException e2)
-                            {
-                                e2.printStackTrace(System.err);
-                            }
-                        }
+                        break;
                     }
                 }
                 Log.e(TAG, "After While ");
                 inputStream.close();
             }catch (IOException e) {
+
                 Log.e(TAG, "Exception "+ e.getMessage() );
             }finally {
                 if (socket != null && !socket.isClosed()) {
                     try {
                         Log.e(TAG, "closing the socket " );
                         socket.close();
+                        inputStream.close();
                     } catch (IOException e2)
                     {
                         e2.printStackTrace(System.err);

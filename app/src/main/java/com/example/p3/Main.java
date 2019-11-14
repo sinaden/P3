@@ -648,10 +648,19 @@ public class Main extends AppCompatActivity {
                         Log.e(TAG, "out if");
                     } catch (IOException e) {
 
-                        e.printStackTrace();
                         Log.e(TAG, "Exception in SendReceive: " + e.getMessage());
-                        //return;
-                        break;
+                     //   return;
+                    }finally {
+                        inputStream.close();
+                        if (socket != null && !socket.isClosed()) {
+                            try {
+                                Log.e(TAG, "closing the socket " );
+                                socket.close();
+                            } catch (IOException e2)
+                            {
+                                e2.printStackTrace(System.err);
+                            }
+                        }
                     }
                 }
                 Log.e(TAG, "After While ");

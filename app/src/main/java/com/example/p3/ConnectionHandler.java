@@ -63,9 +63,20 @@ public class ConnectionHandler  extends Thread{
                     }
                 } catch (IOException e) {
                     Log.e(TAG, "ConnectionHandler Exception: " + e.getMessage() );
-                    e.printStackTrace();
-                    //return;
-                    break;
+                    //e.printStackTrace();
+
+
+                }finally {
+                    inputStream.close();
+                    if (socket != null && !socket.isClosed()) {
+                        try {
+                            Log.e(TAG, "closing the socket " );
+                            socket.close();
+                        } catch (IOException e2)
+                        {
+                            e2.printStackTrace(System.err);
+                        }
+                    }
                 }
             }
 

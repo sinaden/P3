@@ -622,9 +622,6 @@ public class Main extends AppCompatActivity {
                 e.printStackTrace();
                 return;
             }
-            Log.e(TAG, "SendReceive after out and in streams are valued " );
-            Log.e(TAG, "In " + inputStream.toString() );
-            Log.e(TAG, "Out " + outputStream.toString() );
 
         }
 
@@ -647,7 +644,7 @@ public class Main extends AppCompatActivity {
                         }
                         else {
                             inputStream.close();
-                            throw new IOException("It's fucked");
+                            throw new IOException("It's out of function");
 
                         }
                         Log.e(TAG, "out if");
@@ -922,14 +919,11 @@ public class Main extends AppCompatActivity {
         changeView(0); // Base Fragment (Main menu)
 
         int count = mStatePagerAdapter.getCount();
-        //Log.d(TAG, "no. fragments" + count);
 
         if (count == 0)
             super.onBackPressed();
         else {
-            //Log.d(TAG, "no. fragmentsss" + count);
-            //mViewPager.setCurrentItem(0);
-            //mStatePagerAdapter.removeFragment(0);
+
         }
     }
 
@@ -950,21 +944,13 @@ public class Main extends AppCompatActivity {
         if (mainActivityPauses >= 2) {
             tearDownChecker(1);
         }
-       // if (beenToOnCreate)
-            //Log.e(TAG, "onDestroy: ");
-      //      tearDownNSD();
 
-    //    if (nsdManager != null){
-    //        tearDownNSD();
-    //    }
 
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-
-
 
         super.onDestroy();
 

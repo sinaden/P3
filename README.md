@@ -26,5 +26,3 @@ TODO:
 1. Make the server and client function becomes automatical. (So the users don't need to explicitly do anything to establish connection)
 2. Send the actual message (chat) instead of just sending a name
 3. Design messaging part of the app (medium)
-4. Make it so users can drop in and out of app without any problems(??? probably medium-hard)
-5. Think what else needs to be done XD (hard)

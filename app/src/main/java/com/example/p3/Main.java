@@ -240,12 +240,7 @@ public class Main extends AppCompatActivity {
 
         setupViewPager(mViewPager);
 
-        mViewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+        mViewPager.beginFakeDrag();
         // Sina : call setupViewPager(mViewPager) whenever you want to inflate the fragment.
         // So for now it is called when the user clicks on Chatroom button
     }

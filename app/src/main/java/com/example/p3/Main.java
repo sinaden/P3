@@ -225,7 +225,7 @@ public class Main extends AppCompatActivity {
         Log.i(TAG, "onCreate: port no" + portNo);
 
 
-        beServer();
+
 
         initializeRegistrationListener();
         registerService(portNo);
@@ -746,6 +746,7 @@ public class Main extends AppCompatActivity {
                 nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
 
                 Log.i(TAG, "Finished NSD tasks, Now sets up the server. ");
+                beServer();
             }
 
             @Override

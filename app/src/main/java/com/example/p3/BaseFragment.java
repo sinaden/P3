@@ -20,6 +20,7 @@ public class BaseFragment extends Fragment {
     private ImageView btnRoulette;
     private ImageView btnFriends;
     private ImageView btnSettings;
+    private ImageView imgWifi;
 
     @Nullable
     @Override
@@ -31,6 +32,9 @@ public class BaseFragment extends Fragment {
         btnRoulette = (ImageView) view.findViewById(R.id.chat_roulette);
         btnFriends = (ImageView) view.findViewById(R.id.friends);
         btnSettings = (ImageView) view.findViewById(R.id.settings);
+        imgWifi = (ImageView) view.findViewById(R.id.wifi_signal);
+
+        imgWifi.setVisibility(View.GONE);
 
         btnGlobal.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -195,22 +195,27 @@ public class Main extends AppCompatActivity {
                             case 1:
 
                                 Toast.makeText(Main.this, "Global Chat", Toast.LENGTH_LONG).show();
+                                changeView(1);
                                 break;
                             case 2:
 
                                 Toast.makeText(Main.this, "Chat Rooms", Toast.LENGTH_LONG).show();
+                                changeView(2);
                                 break;
                             case 3:
 
                                 Toast.makeText(Main.this, "Chat Roulette", Toast.LENGTH_LONG).show();
+                                changeView(3);
                                 break;
                             case 5:
 
                                 Toast.makeText(Main.this, "Friends", Toast.LENGTH_LONG).show();
+                                changeView(4);
                                 break;
                             case 6:
 
                                 Toast.makeText(Main.this, "Settings", Toast.LENGTH_LONG).show();
+                                changeView(5);
                                 break;
                         }
                         return false;

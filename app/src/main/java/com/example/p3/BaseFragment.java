@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.jetbrains.annotations.NotNull;
+
 public class BaseFragment extends Fragment {
     private static final String TAG = "BaseFragment WiFi";
 
@@ -45,8 +47,9 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Glob");
-            //    ((Main)getActivity()).changeView(1);
-              //  ((Main)getActivity()).beServer();
+
+                ((Main) getActivity()).changeView(1);
+
             }
         });
 
@@ -54,8 +57,8 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Rooms");
-            //    ((Main)getActivity()).changeView(2);
-                ((Main)getActivity()).seeThreads();
+                ((Main)getActivity()).changeView(2);
+            //    ((Main)getActivity()).seeThreads();
             }
         });
 
@@ -63,16 +66,15 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Rou");
-            //    ((Main)getActivity()).changeView(3);
-                ((Main)getActivity()).sendName();
+                ((Main)getActivity()).changeView(3);
+           //     ((Main)getActivity()).sendName();
             }
         });
         btnFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Fre");
-            //    ((Main)getActivity()).changeView(4);
-                ((Main)getActivity()).beClient();
+                ((Main)getActivity()).changeView(4);
             }
         });
 
@@ -80,8 +82,8 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Set");
-                //((Main)getActivity()).changeView(5);
-                ((Main)getActivity()).showDevices();
+                ((Main)getActivity()).changeView(5);
+             //   ((Main)getActivity()).showDevices();
             }
         });
 

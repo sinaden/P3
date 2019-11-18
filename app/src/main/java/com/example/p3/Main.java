@@ -414,6 +414,7 @@ public class Main extends AppCompatActivity {
 
 
         while (!devices.get(i).isConnected()) {
+
             Log.i(TAG,
                     "beClient: Gonna be a client to " + devices.get(i).macAddress
                             +" port:" + devices.get(i).port
@@ -426,6 +427,11 @@ public class Main extends AppCompatActivity {
             }catch (Exception e) {
                 Log.i(TAG, "Exception beClient: "+ e.getMessage());
             }
+
+            while (!devices.get(i).isThreadEnded()) {
+                //
+            }
+            devices.get(i).restartThread();
         }
         Log.e(TAG, "beClientToDevice: Is connected" );
     }
@@ -727,6 +733,7 @@ public class Main extends AppCompatActivity {
                     Log.e(TAG, "Successfully connected to :" + this.hostAddressInet + " port " + this.port);
 
                 devices.get(this.index).changeStatus(success);
+                devices.get(this.index).endThread();
                 return;
             }
         }
@@ -961,6 +968,7 @@ class Device{
     InetAddress inetAddress;
     int port;
     private boolean isConnected;
+    private boolean threadEnded;
 
 
     public Device (String macAddress, InetAddress inetAddress, int port){
@@ -968,10 +976,21 @@ class Device{
         this.inetAddress = inetAddress;
         this.port = port;
         this.isConnected = false;
+        this.threadEnded = false;
     }
     public void changeStatus(boolean status) {
         this.isConnected = status;
 
+    }
+    public boolean isThreadEnded() {
+        return this.threadEnded;
+    }
+
+    public void endThread() {
+        this.threadEnded = true;
+    }
+    public void restartThread() {
+        this.threadEnded = false;
     }
 
     public boolean isConnected() {

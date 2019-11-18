@@ -316,6 +316,9 @@ public class Main extends AppCompatActivity {
         String newMac = signal.substring(i, ii);
 
         Log.e(TAG, "newMac " + newMac );
+
+        int section = Integer.parseInt(signal.substring(ii + 4));
+        Log.e(TAG, "section: "+ section );
     }
 
     public void imAlive() {

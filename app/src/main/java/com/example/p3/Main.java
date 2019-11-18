@@ -322,7 +322,7 @@ public class Main extends AppCompatActivity {
                     public void run() {
                         //clients.get(index).socket;
                         sendReceive2 = clients.get(index);
-                        String M = "I'm: " + NICKNAME + " ,at: " + mViewPager.getCurrentItem();
+                        String M = "I'm: " + NICKNAME + ",my Mac ad:" + macAddress + " ,at: " + mViewPager.getCurrentItem();
 
                         boolean intactPipe = sendReceive2.write(M.getBytes());
                         if (!intactPipe) {
@@ -670,6 +670,7 @@ public class Main extends AppCompatActivity {
                     //socket = server.accept();
 
                     socket = serverSocket.accept();
+
 
                 //    Log.e(TAG, "This client inetAd: "+ socket.getInetAddress());
                 //    Log.e(TAG, "This client port: "+ socket.getPort());

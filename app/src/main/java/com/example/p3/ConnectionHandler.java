@@ -30,7 +30,7 @@ public class ConnectionHandler  extends Thread{
                 case 2:
                     byte[] readBuff2 = (byte[]) msg.obj;
                     String tempMsg2 = new String(readBuff2, 0, msg.arg1);
-                    Log.d(TAG, "Message: "+ tempMsg2);
+                    Log.d(TAG, "Message(C): "+ tempMsg2);
                     break;
             }
 

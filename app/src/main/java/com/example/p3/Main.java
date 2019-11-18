@@ -79,6 +79,12 @@ public class Main extends AppCompatActivity {
     WifiInfo wifiInfo;
     String macAddress;
 
+    private ImageView btnRoom;
+    private ImageView btnGlobal;
+    private ImageView btnRoulette;
+    private ImageView btnFriends;
+    private ImageView btnSettings;
+
     int localPort;
     NsdManager.RegistrationListener registrationListener;
     String serviceName;
@@ -114,6 +120,20 @@ public class Main extends AppCompatActivity {
         mWifiSSID = findViewById(R.id.wifi_ssid);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.toolbar_title));
+
+        btnRoom = findViewById(R.id.chat_rooms);
+        btnGlobal =  findViewById(R.id.global_chat);
+        btnRoulette = findViewById(R.id.chat_roulette);
+        btnFriends =  findViewById(R.id.friends);
+        btnSettings = findViewById(R.id.settings);
+
+        // Hide all the buttons They will be shown in the base fragment instead:
+        btnRoom.setVisibility(View.GONE);
+        btnGlobal.setVisibility(View.GONE);
+        btnRoulette.setVisibility(View.GONE);
+        btnFriends.setVisibility(View.GONE);
+        btnSettings.setVisibility(View.GONE);
+
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                 0);

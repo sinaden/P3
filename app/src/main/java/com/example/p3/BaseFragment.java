@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ public class BaseFragment extends Fragment {
     private ImageView btnFriends;
     private ImageView btnSettings;
     private ImageView imgWifi;
+    private TextView mWifiSSID;
 
     @Nullable
     @Override
@@ -33,7 +35,10 @@ public class BaseFragment extends Fragment {
         btnFriends = (ImageView) view.findViewById(R.id.friends);
         btnSettings = (ImageView) view.findViewById(R.id.settings);
         imgWifi = (ImageView) view.findViewById(R.id.wifi_signal);
+        mWifiSSID = (TextView) view.findViewById(R.id.wifi_ssid);
 
+        //Hide wifi signal icons. They will be shown in the main activity instead:
+        mWifiSSID.setVisibility(View.GONE);
         imgWifi.setVisibility(View.GONE);
 
         btnGlobal.setOnClickListener(new View.OnClickListener() {

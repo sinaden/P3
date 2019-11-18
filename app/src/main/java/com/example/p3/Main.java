@@ -322,7 +322,8 @@ public class Main extends AppCompatActivity {
                     public void run() {
                         //clients.get(index).socket;
                         sendReceive2 = clients.get(index);
-                        String M = "I'm at x";
+                        String M = "I'm: " + NICKNAME + " ,at: " + mViewPager.getCurrentItem();
+
                         boolean intactPipe = sendReceive2.write(M.getBytes());
                         if (!intactPipe) {
                             clients.remove(index);

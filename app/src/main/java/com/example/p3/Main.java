@@ -326,6 +326,8 @@ public class Main extends AppCompatActivity {
                         boolean intactPipe = sendReceive2.write(M.getBytes());
                         if (!intactPipe) {
                             clients.remove(index);
+
+
                         }
                     /*
                     for (int i = 0; i < nClients; i++) {

@@ -147,6 +147,7 @@ public class Main extends AppCompatActivity {
 
         new WifiSignalCheckBG().execute();
 
+        new AliveSignal().execute();
 
         macAddress = getMacAddr();
 
@@ -224,6 +225,7 @@ public class Main extends AppCompatActivity {
         Drawer drawer = drawerBuilder.build();
 
 
+
         beenToOnCreate = true;
 
         portNo = findFreePort();
@@ -261,7 +263,7 @@ public class Main extends AppCompatActivity {
 
 
                 try {
-                    Log.i(TAG, "doInBackground: Scanning");
+                   // Log.i(TAG, "doInBackground: Scanning");
                     setWifiSignal();
                     Thread.sleep(10000);
 
@@ -273,6 +275,71 @@ public class Main extends AppCompatActivity {
             }
         }
 
+    }
+
+    private class AliveSignal extends AsyncTask<Void,Void,Void> {
+
+
+        protected Void doInBackground(Void... params) {
+            while (true) {
+
+
+                try {
+                    Log.i(TAG, "I've alive");
+                    //setWifiSignal();
+                    imAlive();
+                    Thread.sleep(1000);
+
+                } catch (Exception e) {
+                    Log.e(TAG, "AliveSignal Exception : " + e.getMessage());
+                }
+
+
+            }
+        }
+
+    }
+
+    public void imAlive() {
+        //    Log.e(TAG, "Number of clients: "+ clients.size());
+        final int nClients = clients.size();
+
+        for (int i = 0; i < nClients; i++) {
+            //    sendReceive2.write(NICKNAME.getBytes());
+            try {
+                final int index = i;
+                new Thread("aliveMessage") {
+                    @Override
+                    public void run() {
+                        //clients.get(index).socket;
+                        sendReceive2 = clients.get(index);
+                        String M = "I'm at x";
+                        sendReceive2.write(M.getBytes());
+                    /*
+                    for (int i = 0; i < nClients; i++) {
+                        //    sendReceive2.write(NICKNAME.getBytes());
+                        sendReceive2 = clients.get(i);
+                        sendReceive2.write(NICKNAME.getBytes());
+                    }
+
+                     */
+                    }
+                }.start();
+            }catch (Exception e) {
+                Log.e(TAG, "imAlive Exception "+ e.getMessage() );
+            }
+        }
+
+
+        /*
+        new Thread("sendName") {
+            @Override
+            public void run() {
+                sendReceive.write(NICKNAME.getBytes());
+            }
+        }.start();
+
+         */
     }
 
     // Sine : find free port

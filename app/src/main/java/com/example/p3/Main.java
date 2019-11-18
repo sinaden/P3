@@ -225,6 +225,8 @@ public class Main extends AppCompatActivity {
         Log.i(TAG, "onCreate: port no" + portNo);
 
 
+        beServer();
+
         initializeRegistrationListener();
         registerService(portNo);
      //   initializeResolveListener();
@@ -233,8 +235,7 @@ public class Main extends AppCompatActivity {
     // move to onRegister so that it would look after registration is done.
 
 
-        // Sina:
-        Log.e(TAG, "onCreate: start fragment stuff" );
+        // Sina: Fragments
         mStatePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
 
@@ -316,7 +317,6 @@ public class Main extends AppCompatActivity {
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            Log.e(TAG, "In handleMessage" );
             switch (msg.what) {
                 case 1:
                     byte[] readBuff = (byte[]) msg.obj;
@@ -324,12 +324,8 @@ public class Main extends AppCompatActivity {
                     Toast.makeText(Main.this, tempMsg, Toast.LENGTH_LONG).show();
                     break;
                 case 2:
-                    Log.e(TAG, "case 2 " );
                     byte[] readBuff2 = (byte[]) msg.obj;
-                    Log.e(TAG, "case 2  after byte readbuff2" );
-                    Log.e(TAG, "Msg " + msg.obj );
                     String tempMsg2 = new String(readBuff2, 0, msg.arg1);
-                    Log.e(TAG, "case 2 temptM2 " + tempMsg2);
                     Log.e(TAG, "Message: "+ tempMsg2);
                     break;
             }
@@ -405,10 +401,7 @@ public class Main extends AppCompatActivity {
         serverClass.start();
     }
 
-    public void beServerAndClient(){
-        beServer();
-        beClient();
-    }
+
     public void beServer() {
         Log.i(TAG, "beServer: "+" I am a server now");
         serverClass = new ServerClass();
@@ -431,7 +424,6 @@ public class Main extends AppCompatActivity {
                 clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port, i);
                 clientClass.start();
 
-                Log.i(TAG, "beClient: in the try clause ");
             }catch (Exception e) {
                 Log.i(TAG, "Exception beClient: "+ e.getMessage());
             }
@@ -443,7 +435,7 @@ public class Main extends AppCompatActivity {
     }
 
     public void sendName() {
-        Log.e(TAG, "Number of clients: "+ clients.size());
+    //    Log.e(TAG, "Number of clients: "+ clients.size());
         final int nClients = clients.size();
 
         for (int i = 0; i < nClients; i++) {
@@ -544,39 +536,7 @@ public class Main extends AppCompatActivity {
 
         }
     }
-    public class Server { // No use, could be deleted
-        Socket socket;
-        ServerSocket serverSocket;
-        public Server() {
-            try {
-                //Looper.prepare();
-                Log.e(TAG, "ServerClass: port no is " + portNo);
-                serverSocket = new ServerSocket(portNo);
-                localPort = serverSocket.getLocalPort();
 
-
-                int numConnections = 0;
-                while(numConnections < 3){
-                    Log.e(TAG, "numCon "+ numConnections );
-                    //socket = server.accept();
-                    socket = serverSocket.accept();
-                    Thread peerConnection = new Thread(new ConnectionHandler(socket));
-                    peerConnection.start();
-                    numConnections++;
-                }
-                /*
-                socket = serverSocket.accept();
-                sendReceive = new SendReceive(socket);
-                sendReceive.start();
-                sendReceive.setName("SendReceive/fromServer");
-                */
-                Log.i(TAG, "close server socket");
-                socket.close();
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-            }
-        }
-    }
 
     public class ServerClass extends Thread {
         Socket socket;
@@ -598,23 +558,17 @@ public class Main extends AppCompatActivity {
 
                     socket = serverSocket.accept();
 
-                    Log.e(TAG, "This client inetAd: "+ socket.getInetAddress());
-                    Log.e(TAG, "This client port: "+ socket.getPort());
-                    Log.e(TAG, "This client local port: "+ socket.getLocalPort());
-                    Log.e(TAG, "This client local ad: "+ socket.getLocalAddress());
+                //    Log.e(TAG, "This client inetAd: "+ socket.getInetAddress());
+                //    Log.e(TAG, "This client port: "+ socket.getPort());
+                //    Log.e(TAG, "This client local port: "+ socket.getLocalPort());
+                //    Log.e(TAG, "This client local ad: "+ socket.getLocalAddress());
 
                     sendReceive2 = new ConnectionHandler(socket);
                     sendReceive2.start();
                     clients.add(sendReceive2);
                     numConnections++;
                 }
-                /*
-                socket = serverSocket.accept();
-                sendReceive = new SendReceive(socket);
-                sendReceive.start();
-                sendReceive.setName("SendReceive/fromServer");
-                */
-               // socket.close();
+
             } catch (IOException e) {
 
             }finally {
@@ -639,7 +593,6 @@ public class Main extends AppCompatActivity {
         private OutputStream outputStream;
 
         public SendReceive(Socket socket) {
-            Log.e(TAG, "SendReceive constructor" );
             this.socket = socket;
             try {
                 inputStream = socket.getInputStream();
@@ -654,27 +607,21 @@ public class Main extends AppCompatActivity {
 
         @Override
         public void run() {
-            Log.e(TAG, "run method of sendReceive " );
             byte[] buffer = new byte[1024];
             int bytes;
 
             try {
                 while (socket != null) {
-                    Log.e(TAG, "in the while ");
                     try {
                         bytes = inputStream.read(buffer);
                         if (bytes > 0) {
-                            Log.e(TAG, "in if before handler");
-                        //    Log.e(TAG, "iibh buffer " + buffer.toString());
                             handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
-                        //    Log.e(TAG, "in if");
                         }
                         else {
                             inputStream.close();
                             throw new IOException("It's out of function");
 
                         }
-                        Log.e(TAG, "out if");
                     } catch (IOException e) {
 
                         Log.e(TAG, "Exception in SendReceive: " + e.getMessage());
@@ -682,7 +629,6 @@ public class Main extends AppCompatActivity {
                         break;
                     }
                 }
-                Log.e(TAG, "After While ");
                 inputStream.close();
             }catch (IOException e) {
 
@@ -750,7 +696,6 @@ public class Main extends AppCompatActivity {
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
                 sendReceive.setName("sendRecieve/fromClient");
-                Log.e(TAG, "ClientClass SR started" );
 
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
@@ -801,7 +746,6 @@ public class Main extends AppCompatActivity {
                 nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
 
                 Log.i(TAG, "Finished NSD tasks, Now sets up the server. ");
-                beServer();
             }
 
             @Override
@@ -831,7 +775,7 @@ public class Main extends AppCompatActivity {
 
             @Override
             public void onServiceFound(NsdServiceInfo serviceInfo) {
-                Log.e(TAG, "Service discovery success " + serviceInfo.toString());
+                Log.i(TAG, "Service discovery success " + serviceInfo.toString());
                 if(!serviceInfo.getServiceType().equals(SERVICE_TYPE)){
                     Log.i(TAG, "Unknown Service Type: " + serviceInfo.getServiceType());
                 } else if(serviceInfo.getServiceName().equals(serviceName)){

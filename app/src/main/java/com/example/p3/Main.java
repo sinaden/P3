@@ -321,7 +321,9 @@ public class Main extends AppCompatActivity {
                     @Override
                     public void run() {
                         //clients.get(index).socket;
+
                         sendReceive2 = clients.get(index);
+
                         String M = "I'm: " + NICKNAME + ",my Mac ad:" + macAddress + " ,at: " + mViewPager.getCurrentItem();
 
                         boolean intactPipe = sendReceive2.write(M.getBytes());

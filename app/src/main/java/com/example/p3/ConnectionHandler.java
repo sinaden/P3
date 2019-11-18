@@ -89,7 +89,18 @@ public class ConnectionHandler  extends Thread{
             outputStream.write(bytes);
 
         } catch (IOException e) {
+
             Log.i(TAG, "Cannot write,"+ e.getMessage());
+            if(socket!=null && !socket.isClosed()) {
+                try {
+                    Log.e(TAG, "closing the socket");
+                    socket.close();
+                    inputStream.close();
+
+                }catch (IOException e1) {
+                    Log.e(TAG, "exception" + e1.getMessage() );
+                }
+            }
             return false;
         }
         return true;

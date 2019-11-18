@@ -409,6 +409,26 @@ public class Main extends AppCompatActivity {
         serverClass.setName("ServerClass Thread");
 
     }
+    public void beClientToDevice(int index) {
+        int i = index;
+
+
+        while (!devices.get(i).isConnected()) {
+            Log.i(TAG,
+                    "beClient: Gonna be a client to " + devices.get(i).macAddress
+                            +" port:" + devices.get(i).port
+                            + " host ad " + devices.get(i).inetAddress );
+
+            try {
+                clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port, i);
+                clientClass.start();
+
+            }catch (Exception e) {
+                Log.i(TAG, "Exception beClient: "+ e.getMessage());
+            }
+        }
+        Log.e(TAG, "beClientToDevice: Is connected" );
+    }
     public void beClient() {
 
         for (int i =0; i < devices.size(); i++) {
@@ -831,9 +851,13 @@ public class Main extends AppCompatActivity {
                 InetAddress host = serviceInfo.getHost();
                 String hostMacAddress = serviceInfo.getServiceName().replaceFirst("Wi-Chat", "").trim();
 
+
                 devices.add(new Device(hostMacAddress, host, port));
+                int index = devices.size() - 1;
                 Log.i(TAG, devices.get(devices.size()-1).macAddress + devices.get(devices.size()-1).inetAddress);
 
+                // Send a client request
+                beClientToDevice(index);
             }
         };
     }

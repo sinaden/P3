@@ -37,7 +37,7 @@ public class BaseFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Glob");
             //    ((Main)getActivity()).changeView(1);
-                ((Main)getActivity()).beServer();
+              //  ((Main)getActivity()).beServer();
             }
         });
 

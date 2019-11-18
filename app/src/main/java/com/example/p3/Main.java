@@ -772,6 +772,9 @@ public class Main extends AppCompatActivity {
                 initializeResolveListener();
                 initializeDiscoveryListener();
                 nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+
+                Log.i(TAG, "Finished NSD tasks, Now sets up the server. ");
+                beServer();
             }
 
             @Override

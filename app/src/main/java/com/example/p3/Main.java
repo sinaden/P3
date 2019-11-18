@@ -424,7 +424,7 @@ public class Main extends AppCompatActivity {
                 case 2:
                     byte[] readBuff2 = (byte[]) msg.obj;
                     String tempMsg2 = new String(readBuff2, 0, msg.arg1);
-                    updateList(tempMsg);
+                    updateList(tempMsg2);
                     Log.e(TAG, "Message: "+ tempMsg2);
                     break;
             }

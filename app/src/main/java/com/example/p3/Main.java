@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -300,6 +301,13 @@ public class Main extends AppCompatActivity {
         mStatePagerAdapter.addFragment(new SettingsFragment(), "SettingFragment");
         //adapter.addFragment(new Fragment(), "GlobalChatFragment");
         viewPager.setAdapter(mStatePagerAdapter);
+       // viewPager.ontou;
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
     }
 

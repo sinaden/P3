@@ -145,9 +145,18 @@ public class Main extends AppCompatActivity {
         // https://stackoverflow.com/questions/5161951/android-only-the-original-thread-that-created-a-view-hierarchy-can-touch-its-vi
         // AsyncTask is suggested in android instead of working with threads
 
-        new WifiSignalCheckBG().execute();
 
-        new AliveSignal().execute();
+       // new WifiSignalCheckBG().execute();
+
+        //https://stackoverflow.com/questions/31957815/android-asynctask-not-executing
+
+        WifiSignalCheckBG w = new WifiSignalCheckBG();
+        w.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+
+        AliveSignal g = new AliveSignal();
+        g.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        //new AliveSignal().execute();
 
         macAddress = getMacAddr();
 

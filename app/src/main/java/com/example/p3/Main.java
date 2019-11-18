@@ -263,7 +263,7 @@ public class Main extends AppCompatActivity {
 
 
                 try {
-                   // Log.i(TAG, "doInBackground: Scanning");
+                    Log.i(TAG, "doInBackground: Scanning");
                     setWifiSignal();
                     Thread.sleep(10000);
 
@@ -285,7 +285,7 @@ public class Main extends AppCompatActivity {
 
 
                 try {
-                    Log.i(TAG, "I've alive");
+                    Log.i(TAG, "I'm alive");
                     //setWifiSignal();
                     imAlive();
                     Thread.sleep(1000);

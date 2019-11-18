@@ -309,6 +309,15 @@ public class Main extends AppCompatActivity {
 
     }
 
+
+    public void updateList(String signal) {
+        int i = signal.indexOf("my Mac ad:") + 10;
+        int ii = signal.indexOf(",at:");
+        String newMac = signal.substring(i, ii);
+
+        Log.e(TAG, "newMac " + newMac );
+    }
+
     public void imAlive() {
         //    Log.e(TAG, "Number of clients: "+ clients.size());
         //int nClients = clients.size();
@@ -415,6 +424,7 @@ public class Main extends AppCompatActivity {
                 case 2:
                     byte[] readBuff2 = (byte[]) msg.obj;
                     String tempMsg2 = new String(readBuff2, 0, msg.arg1);
+                    updateList(tempMsg);
                     Log.e(TAG, "Message: "+ tempMsg2);
                     break;
             }

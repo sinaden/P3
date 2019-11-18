@@ -84,11 +84,14 @@ public class ConnectionHandler  extends Thread{
             }
         }
     }
-    public void write(byte[] bytes) {
+    public boolean write(byte[] bytes) {
         try {
             outputStream.write(bytes);
+
         } catch (IOException e) {
-            Log.i(TAG, e.getMessage());
+            Log.i(TAG, "Cannot write,"+ e.getMessage());
+            return false;
         }
+        return true;
     }
 }

@@ -57,8 +57,8 @@ public class BaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clicked on Rooms");
-                ((Main)getActivity()).changeView(2);
-            //    ((Main)getActivity()).seeThreads();
+            //    ((Main)getActivity()).changeView(2);
+                ((Main)getActivity()).seeThreads();
             }
         });
 

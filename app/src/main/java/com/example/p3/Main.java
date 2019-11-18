@@ -311,9 +311,9 @@ public class Main extends AppCompatActivity {
 
     public void imAlive() {
         //    Log.e(TAG, "Number of clients: "+ clients.size());
-        final int nClients = clients.size();
+        //int nClients = clients.size();
 
-        for (int i = 0; i < nClients; i++) {
+        for (int i = 0; i < clients.size(); i++) {
             //    sendReceive2.write(NICKNAME.getBytes());
             try {
                 final int index = i;
@@ -323,7 +323,10 @@ public class Main extends AppCompatActivity {
                         //clients.get(index).socket;
                         sendReceive2 = clients.get(index);
                         String M = "I'm at x";
-                        sendReceive2.write(M.getBytes());
+                        boolean intactPipe = sendReceive2.write(M.getBytes());
+                        if (!intactPipe) {
+                            clients.remove(index);
+                        }
                     /*
                     for (int i = 0; i < nClients; i++) {
                         //    sendReceive2.write(NICKNAME.getBytes());
@@ -723,6 +726,9 @@ public class Main extends AppCompatActivity {
                         bytes = inputStream.read(buffer);
                         if (bytes > 0) {
                             handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
+                          //  byte[] readBuff2 = (byte[]) buffer;
+                          //  String tempMsg2 = new String(readBuff2, 0, bytes);
+
                         }
                         else {
                             inputStream.close();

@@ -312,12 +312,13 @@ public class Main extends AppCompatActivity {
 
     public void updateList(String signal) {
         int i = signal.indexOf("my Mac ad:") + 10;
-        int ii = signal.indexOf(",at:");
+        int ii = signal.indexOf(",at: ");
         String newMac = signal.substring(i, ii);
 
         Log.e(TAG, "newMac " + newMac );
-
-        int section = Integer.parseInt(signal.substring(ii + 4));
+        String se = signal.substring(ii + 5, signal.length());
+        Log.e(TAG, "updateList: " + se );
+        int section = Integer.parseInt(se);
         Log.e(TAG, "section: "+ section );
     }
 

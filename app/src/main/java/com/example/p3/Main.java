@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 
@@ -112,6 +113,7 @@ public class Main extends AppCompatActivity {
 
     List<ConnectionHandler> clients = new ArrayList<ConnectionHandler>();
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,6 +239,13 @@ public class Main extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
 
         setupViewPager(mViewPager);
+
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         // Sina : call setupViewPager(mViewPager) whenever you want to inflate the fragment.
         // So for now it is called when the user clicks on Chatroom button
     }
@@ -302,12 +311,7 @@ public class Main extends AppCompatActivity {
         //adapter.addFragment(new Fragment(), "GlobalChatFragment");
         viewPager.setAdapter(mStatePagerAdapter);
        // viewPager.ontou;
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+
 
     }
 

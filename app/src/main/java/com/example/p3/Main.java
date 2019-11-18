@@ -297,7 +297,7 @@ public class Main extends AppCompatActivity {
                     Log.i(TAG, "I'm alive");
                     //setWifiSignal();
                     imAlive();
-                    Thread.sleep(1000);
+                    Thread.sleep(1500);
 
                 } catch (Exception e) {
                     Log.e(TAG, "AliveSignal Exception : " + e.getMessage());
@@ -313,13 +313,25 @@ public class Main extends AppCompatActivity {
     public void updateList(String signal) {
         int i = signal.indexOf("my Mac ad:") + 10;
         int ii = signal.indexOf(",at: ");
+        int iii = signal.indexOf("#");
+
+
         String newMac = signal.substring(i, ii);
 
-        Log.e(TAG, "newMac " + newMac );
-        String se = signal.substring(ii + 5, signal.length());
-        Log.e(TAG, "updateList: " + se );
+        //Log.e(TAG, "newMac " + newMac );
+        String se = signal.substring(ii + 5, iii);
         int section = Integer.parseInt(se);
-        Log.e(TAG, "section: "+ section );
+       // Log.e(TAG, "section: "+ section );
+
+
+        int i1 = signal.indexOf("I'm: ") + 4;
+
+        String peerName = signal.substring(i1, i - 10);
+        if (section == mViewPager.getCurrentItem()) {
+            // enable messaging.
+            Log.e(TAG, "We are in the same room, lets chat" );
+            makeToastMessage(peerName);
+        }
     }
 
     public void imAlive() {
@@ -337,7 +349,7 @@ public class Main extends AppCompatActivity {
 
                         sendReceive2 = clients.get(index);
 
-                        String M = "I'm: " + NICKNAME + ",my Mac ad:" + macAddress + " ,at: " + mViewPager.getCurrentItem();
+                        String M = "I'm: " + NICKNAME + ",my Mac ad:" + macAddress + " ,at: " + mViewPager.getCurrentItem() + "#";
 
                         boolean intactPipe = sendReceive2.write(M.getBytes());
                         if (!intactPipe) {

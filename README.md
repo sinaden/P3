@@ -1,4 +1,4 @@
-# P3
+# P3 (Beta)
 AAU semester project #3
 
 First activity is only to inster your nickname if it's a fresh installation. 

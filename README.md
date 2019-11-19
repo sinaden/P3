@@ -29,7 +29,7 @@ And you see a toast message of the other peer shown on the screen. Objective is 
 Note : To go back to main menu you can press on back button. To go to other menues you can use hamburger menu.
 
 TODO:
-1. I don't know.
+1. Think about more tasks. 
 2. Send the actual message (chat) instead of just sending a name
 3. Design the ability to make rooms. 
 4. Design the ability to send friend request.

@@ -16,13 +16,20 @@ You can make a wifi network with your phone hotspot:
 How to test:
 1. Connect 2 or more phones (P1 and P2)
 2. Launch app on all the phones. 
-3. Look at the logs, wait until they find each other. 
-4. Click on global chat in all the phones. (Starts to listen as a server)
-4. Click on Friends in all the phones (Becomes a client to the other ones)
-5. click on Chat Roulette in P1, there should be a log messages (name of the P1 device user) appears on the other phones' logcat. 
+3. Look at the logs, wait until they find each other. Every 1.5 seconds you will see red log messages from the other peers as such: 
+7599-7599 E/WiFi: Message: I'm: HuawiTablet,my Mac ad:50:4:b8:1a:d0:cc ,at: 0#
+This is an alive signal. 
+First argument is the nickname for the other peer. The second argument is its mac adress and third argument is their location in the app. (Global chat is 1, main menu is 0, Setting is 5 etc) 
 
+5. If two device are at the same location you see the following log message :  
+We are in the same room, lets chat
+And you see a toast message of the other peer shown on the screen. Objective is to make it so that two peer could send message in the global chat section. (The scroll view is implemented already)
+
+
+Note : To go back to main menu you can press on back button. To go to other menues you can use hamburger menu.
 
 TODO:
-1. Make the server and client function becomes automatical. (So the users don't need to explicitly do anything to establish connection)
 2. Send the actual message (chat) instead of just sending a name
-3. Design messaging part of the app (medium)
+3. Design the ability to make rooms. 
+4. Design the ability to send friend request.
+4. Make setting (Least priority!)

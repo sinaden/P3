@@ -154,6 +154,7 @@ public class Main extends AppCompatActivity {
         w.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
+
         AliveSignal g = new AliveSignal();
         g.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         //new AliveSignal().execute();
@@ -257,9 +258,7 @@ public class Main extends AppCompatActivity {
 
         setupViewPager(mViewPager);
 
-        mViewPager.beginFakeDrag();
-        // Sina : call setupViewPager(mViewPager) whenever you want to inflate the fragment.
-        // So for now it is called when the user clicks on Chatroom button
+        mViewPager.beginFakeDrag(); // prevents swiping
     }
 
 
@@ -286,6 +285,7 @@ public class Main extends AppCompatActivity {
 
     }
 
+    // Make a signal to all the connected peers ever 1 and half second. (Says its location in the app)
     private class AliveSignal extends AsyncTask<Void,Void,Void> {
 
 
@@ -310,6 +310,7 @@ public class Main extends AppCompatActivity {
     }
 
 
+    // Will analyze each alive signal recieved from other peers. dev
     public void updateList(String signal) {
         int i = signal.indexOf("my Mac ad:") + 10;
         int ii = signal.indexOf(",at: ");
@@ -335,11 +336,9 @@ public class Main extends AppCompatActivity {
     }
 
     public void imAlive() {
-        //    Log.e(TAG, "Number of clients: "+ clients.size());
-        //int nClients = clients.size();
+
 
         for (int i = 0; i < clients.size(); i++) {
-            //    sendReceive2.write(NICKNAME.getBytes());
             try {
                 final int index = i;
                 new Thread("aliveMessage") {
@@ -357,14 +356,7 @@ public class Main extends AppCompatActivity {
 
 
                         }
-                    /*
-                    for (int i = 0; i < nClients; i++) {
-                        //    sendReceive2.write(NICKNAME.getBytes());
-                        sendReceive2 = clients.get(i);
-                        sendReceive2.write(NICKNAME.getBytes());
-                    }
 
-                     */
                     }
                 }.start();
             }catch (Exception e) {
@@ -373,15 +365,6 @@ public class Main extends AppCompatActivity {
         }
 
 
-        /*
-        new Thread("sendName") {
-            @Override
-            public void run() {
-                sendReceive.write(NICKNAME.getBytes());
-            }
-        }.start();
-
-         */
     }
 
     // Sine : find free port
@@ -550,92 +533,10 @@ public class Main extends AppCompatActivity {
         }
         Log.e(TAG, "beClientToDevice: Is connected" );
     }
-    public void beClient() {
-
-        for (int i =0; i < devices.size(); i++) {
-            if (devices.get(i).isConnected()) {
-                continue;
-            }
-            Log.i(TAG,
-                    "beClient: Gonna be a client to " + devices.get(i).macAddress
-                    +" port:" + devices.get(i).port
-                    + " host ad " + devices.get(i).inetAddress );
-
-            try {
-                clientClass = new ClientClass(devices.get(i).inetAddress, devices.get(i).port, i);
-                clientClass.start();
-
-            }catch (Exception e) {
-                Log.i(TAG, "Exception beClient: "+ e.getMessage());
-            }
 
 
-        }
 
 
-    }
-
-    public void sendName() {
-    //    Log.e(TAG, "Number of clients: "+ clients.size());
-        final int nClients = clients.size();
-
-        for (int i = 0; i < nClients; i++) {
-            //    sendReceive2.write(NICKNAME.getBytes());
-            final int index = i;
-            new Thread("sendName") {
-                @Override
-                public void run() {
-                    //clients.get(index).socket;
-                    sendReceive2 = clients.get(index);
-                    sendReceive2.write(NICKNAME.getBytes());
-                    /*
-                    for (int i = 0; i < nClients; i++) {
-                        //    sendReceive2.write(NICKNAME.getBytes());
-                        sendReceive2 = clients.get(i);
-                        sendReceive2.write(NICKNAME.getBytes());
-                    }
-
-                     */
-                }
-            }.start();
-        }
-
-
-        /*
-        new Thread("sendName") {
-            @Override
-            public void run() {
-                sendReceive.write(NICKNAME.getBytes());
-            }
-        }.start();
-
-         */
-    }
-
-    public void sendNameBackup() {
-        Log.e(TAG, "Number of clients: "+ clients.size());
-        final int nClients = clients.size();
-        new Thread("sendName") {
-            @Override
-            public void run() {
-                for (int i = 0; i < nClients; i++) {
-                    //    sendReceive2.write(NICKNAME.getBytes());
-                    sendReceive2 = clients.get(i);
-                    sendReceive2.write(NICKNAME.getBytes());
-                }
-            }
-        }.start();
-
-        /*
-        new Thread("sendName") {
-            @Override
-            public void run() {
-                sendReceive.write(NICKNAME.getBytes());
-            }
-        }.start();
-
-         */
-    }
     public void chatRoomsButton(View view) {
         Toast.makeText(Main.this, "Chat Rooms", Toast.LENGTH_LONG).show();
        // Log.i(TAG, NICKNAME);
@@ -670,6 +571,7 @@ public class Main extends AppCompatActivity {
         Toast.makeText(Main.this, "Settings", Toast.LENGTH_LONG).show();
     }
 
+    // Useful for debugging, shows all the threads
     public void seeThreads(){
         Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
         for (Thread t : threadSet){
@@ -758,8 +660,7 @@ public class Main extends AppCompatActivity {
                         bytes = inputStream.read(buffer);
                         if (bytes > 0) {
                             handler.obtainMessage(2, bytes, -1, buffer).sendToTarget();
-                          //  byte[] readBuff2 = (byte[]) buffer;
-                          //  String tempMsg2 = new String(readBuff2, 0, bytes);
+
 
                         }
                         else {
@@ -828,8 +729,7 @@ public class Main extends AppCompatActivity {
         public void run(){
             boolean success = true;
             try {
-            // Maybe I shouldn't convert it to String. So that Huawi device can connect too.
-            //    socket.connect(new InetSocketAddress(hostAddressString, port), 500);
+
                 Log.e(TAG, "ClientClass hostAdInet " + hostAddressInet );
                 Log.e(TAG, "ClientClass hostAdString " + hostAddressString );
                 Log.e(TAG, "ClientClass port " + port );
@@ -866,7 +766,6 @@ public class Main extends AppCompatActivity {
 
         serviceInfo.setServiceName("Wi-Chat " + macAddress);
         serviceInfo.setServiceType(SERVICE_TYPE);
-        //serviceInfo.setAttribute("portNo", );
 
         serviceInfo.setPort(port);
 
